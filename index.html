@@ -1,1 +1,312 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر الأناقة - ملابس عصرية</title>
+    <!-- استيراد خطوط وتصاميم أيقونات -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-pink: #ff6584;
+            --light-pink: #fff0f3;
+            --dark-pink: #e04f6d;
+            --white: #ffffff;
+            --gray-bg: #f9f9f9;
+            --text-color: #333333;
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--text-color);
+        }
+
+        /* رأس الصفحة */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 8%;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-pink);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            margin: 0 15px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: var(--primary-pink);
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 20px;
+            font-size: 20px;
+            color: var(--primary-pink);
+            cursor: pointer;
+        }
+
+        /* قسم الواجهة الرئيسية (Hero) */
+        .hero {
+            background: linear-gradient(135deg, var(--light-pink) 0%, #ffe3e8 100%);
+            padding: 80px 8%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            color: var(--dark-pink);
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 25px;
+            max-width: 600px;
+        }
+
+        .btn-shop {
+            background-color: var(--primary-pink);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(255, 101, 132, 0.4);
+            transition: 0.3s;
+        }
+
+        .btn-shop:hover {
+            background-color: var(--dark-pink);
+            transform: translateY(-2px);
+        }
+
+        /* قسم المنتجات */
+        .products-section {
+            padding: 60px 8%;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 30px;
+            color: var(--text-color);
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: var(--primary-pink);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: var(--white);
+            border: 1px solid #eee;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(255, 101, 132, 0.15);
+            border-color: var(--light-pink);
+        }
+
+        .product-img-container {
+            width: 100%;
+            height: 280px;
+            background-color: var(--gray-bg);
+            overflow: hidden;
+        }
+
+        .product-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+
+        .product-card:hover .product-img-container img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .product-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            color: var(--primary-pink);
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .btn-add-cart {
+            background-color: var(--light-pink);
+            color: var(--primary-pink);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        .btn-add-cart:hover {
+            background-color: var(--primary-pink);
+            color: var(--white);
+        }
+
+        /* تذييل الصفحة (Footer) */
+        footer {
+            background-color: var(--light-pink);
+            color: var(--text-color);
+            text-align: center;
+            padding: 30px 8%;
+            margin-top: 50px;
+            font-weight: 600;
+        }
+
+        .admin-link-btn {
+            display: inline-block;
+            margin-top: 15px;
+            font-size: 14px;
+            color: var(--dark-pink);
+            text-decoration: none;
+        }
+        .admin-link-btn:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- الهيدر -->
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-shirt"></i> متجر الأناقة
+        </div>
+        <nav>
+            <a href="#">الرئيسية</a>
+            <a href="#products">المنتجات</a>
+            <a href="#">عن المتجر</a>
+        </nav>
+        <div class="header-icons">
+            <i class="fa-solid fa-heart"></i>
+            <i class="fa-solid fa-bag-shopping"></i>
+        </div>
+    </header>
+
+    <!-- واجهة الترحيب -->
+    <section class="hero">
+        <h1>أحدث صيحات الموضة النسائية والرجالية</h1>
+        <p>تألقي بإطلالة عصرية ومميزة مع تشكيلة ملابسنا الجديدة المصنوعة خصيصاً لأجلك.</p>
+        <a href="#products" class="btn-shop">تسوق الآن</a>
+    </section>
+
+    <!-- قسم المنتجات -->
+    <section class="products-section" id="products">
+        <h2 class="section-title">منتجاتنا المميزة</h2>
+        <div class="products-grid" id="productsContainer">
+            <!-- سيتم حقن المنتجات ديناميكياً هنا عبر الجافاسكريبت -->
+        </div>
+    </section>
+
+    <!-- الفوتر -->
+    <footer>
+        <p>جميع الحقوق محفوظة © 2026 - متجر الأناقة</p>
+        <a href="admin.html" class="admin-link-btn"><i class="fa-solid fa-lock"></i> الدخول للوحة التحكم (المدير)</a>
+    </footer>
+
+    <script>
+        // جلب المنتجات المخزنة من المتصفح أو عرض منتجات افتراضية
+        const defaultProducts = [
+            { id: 1, name: "فستان سهرة زهري أنيق", price: "250", image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=500" },
+            { id: 2, name: "جاكيت صيفي وردي كاجوال", price: "180", image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500" },
+            { id: 3, name: "قميص قطني ناعم", price: "120", image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500" }
+        ];
+
+        function loadCustomerProducts() {
+            let products = JSON.parse(localStorage.getItem('store_products'));
+            if (!products) {
+                products = defaultProducts;
+                localStorage.setItem('store_products', JSON.stringify(products));
+            }
+
+            const container = document.getElementById('productsContainer');
+            container.innerHTML = '';
+
+            products.forEach(product => {
+                container.innerHTML += `
+                    <div class="product-card">
+                        <div class="product-img-container">
+                            <img src="${product.image}" alt="${product.name}">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">${product.name}</h3>
+                            <div class="product-price">${product.price} ر.س</div>
+                            <button class="btn-add-cart" onclick="alert('تمت الإضافة إلى السلة بنجاح!')">إضافة للسلة</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        window.onload = loadCustomerProducts;
+    </script>
+</body>
+</html>
