@@ -109,7 +109,7 @@
             font-weight: 700;
         }
 
-        /* Hero */
+        /* الواجهة الرئيسية */
         .hero {
             background: linear-gradient(135deg, var(--light-pink) 0%, #ffe3e8 100%);
             padding: 60px 8%;
@@ -198,7 +198,7 @@
 
         .btn-add-cart:hover { background-color: var(--dark-pink); }
 
-        /* سلة المشتريات Side Drawer */
+        /* سلة المشتريات */
         .cart-drawer-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -296,7 +296,7 @@
             margin-top: 10px;
         }
 
-        /* نموذج الطلب برقم التواصل */
+        /* نموذج إدخال هاتف الزبون والطلب */
         .checkout-form {
             margin-top: 15px;
             display: flex;
@@ -343,13 +343,13 @@
 </head>
 <body>
 
-    <!-- الهيدر مع رابط صورة الشعار LOGO.JPE من GitHub -->
+    <!-- الهيدر مع صورة الشعار -->
     <header>
         <a href="index.html" class="logo-container">
-            <img src="https://raw.githubusercontent.com/elegaantrose/shop/main/LOGO.JPE" 
+            <img src="https://raw.githubusercontent.com/elegaantrose/shop/main/logo/LOGO.JPE" 
                  alt="Elegant Rose Logo" 
                  class="logo-img" 
-                 onerror="this.src='https://raw.githubusercontent.com/elegaantrose/shop/main/logo/LOGO.JPE';">
+                 onerror="this.src='https://raw.githubusercontent.com/elegaantrose/shop/main/LOGO.JPE';">
             <div class="logo-text">
                 <span class="logo-title-en">ELEGANT ROSE</span>
                 <span class="logo-title-ar">الوردة الأنيقة</span>
@@ -397,172 +397,4 @@
                 <span id="shippingPrice">0 د.أ</span>
             </div>
             <div class="summary-row summary-total">
-                <span>المجموع النهائي:</span>
-                <span id="finalTotalPrice">0 د.أ</span>
-            </div>
-
-            <!-- نموذج الطلب برقم التواصل -->
-            <form class="checkout-form" id="checkoutForm" onsubmit="submitOrder(event)">
-                <input type="text" id="custName" placeholder="الاسم الكامل *" required>
-                <input type="tel" id="custPhone" placeholder="رقم الهاتف للتواصل (مثال: 0791234567) *" required>
-                <textarea id="custAddress" rows="2" placeholder="العنوان التفصيلي (المدينة / الحي)..."></textarea>
-                <button type="submit" class="btn-checkout">
-                    <i class="fa-brands fa-whatsapp"></i> تأكيد الطلب والتواصل
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- الفوتر -->
-    <footer>
-        <p>© 2026 Elegant Rose | الوردة الأنيقة</p>
-        <a href="admin.html" class="admin-link"><i class="fa-solid fa-lock"></i> لوحة التحكم (المدير)</a>
-    </footer>
-
-    <script>
-        const defaultProducts = [
-            { id: 1, name: "فستان سهرة أنيق", price: 35, image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=500" },
-            { id: 2, name: "جاكيت ربيعي وردي", price: 25, image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500" },
-            { id: 3, name: "قميص ناعم راقي", price: 18, image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500" }
-        ];
-
-        let cart = [];
-        let shippingFee = 3;
-        const whatsappNumber = "962700000000";
-
-        function init() {
-            const savedShipping = localStorage.getItem('shipping_fee');
-            if (savedShipping !== null) shippingFee = parseFloat(savedShipping);
-
-            loadProducts();
-            updateCartUI();
-        }
-
-        function loadProducts() {
-            let products = JSON.parse(localStorage.getItem('store_products')) || defaultProducts;
-            const container = document.getElementById('productsContainer');
-            container.innerHTML = '';
-
-            products.forEach(p => {
-                container.innerHTML += `
-                    <div class="product-card">
-                        <div class="product-img-container">
-                            <img src="${p.image}" alt="${p.name}">
-                        </div>
-                        <div class="product-info">
-                            <h3 class="product-title">${p.name}</h3>
-                            <div class="product-price">${p.price} د.أ</div>
-                            <button class="btn-add-cart" onclick="addToCart(${p.id}, '${p.name}', ${p.price}, '${p.image}')">
-                                <i class="fa-solid fa-plus"></i> إضافة للسلة
-                            </button>
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        function addToCart(id, name, price, image) {
-            const existingIndex = cart.findIndex(item => item.id === id);
-            if (existingIndex > -1) {
-                cart[existingIndex].qty += 1;
-            } else {
-                cart.push({ id, name, price: parseFloat(price), image, qty: 1 });
-            }
-            updateCartUI();
-            toggleCart(true);
-        }
-
-        function updateCartQty(index, change) {
-            cart[index].qty += change;
-            if (cart[index].qty <= 0) cart.splice(index, 1);
-            updateCartUI();
-        }
-
-        function updateCartUI() {
-            const container = document.getElementById('cartItemsContainer');
-            const cartBadge = document.getElementById('cartBadge');
-            container.innerHTML = '';
-
-            let subtotal = 0;
-            let totalQty = 0;
-
-            if (cart.length === 0) {
-                container.innerHTML = '<p style="text-align:center; color:#999; margin-top:30px;">السلة فارغة حالياً</p>';
-            } else {
-                cart.forEach((item, idx) => {
-                    subtotal += item.price * item.qty;
-                    totalQty += item.qty;
-                    container.innerHTML += `
-                        <div class="cart-item">
-                            <img src="${item.image}" alt="">
-                            <div class="cart-item-details">
-                                <div class="cart-item-title">${item.name}</div>
-                                <div class="cart-item-price">${item.price} د.أ</div>
-                                <div class="cart-qty-controls">
-                                    <button class="cart-qty-btn" onclick="updateCartQty(${idx}, -1)">-</button>
-                                    <span>${item.qty}</span>
-                                    <button class="cart-qty-btn" onclick="updateCartQty(${idx}, 1)">+</button>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                });
-            }
-
-            cartBadge.innerText = totalQty;
-            const currentShipping = cart.length > 0 ? shippingFee : 0;
-            const finalTotal = subtotal + currentShipping;
-
-            document.getElementById('subtotalPrice').innerText = subtotal + " د.أ";
-            document.getElementById('shippingPrice').innerText = currentShipping + " د.أ";
-            document.getElementById('finalTotalPrice').innerText = finalTotal + " د.أ";
-        }
-
-        function toggleCart(open) {
-            document.getElementById('cartOverlay').classList.toggle('active', open);
-            document.getElementById('cartDrawer').classList.toggle('active', open);
-        }
-
-        function submitOrder(e) {
-            e.preventDefault();
-            if (cart.length === 0) {
-                alert('السلة فارغة!');
-                return;
-            }
-
-            const name = document.getElementById('custName').value;
-            const phone = document.getElementById('custPhone').value;
-            const address = document.getElementById('custAddress').value;
-
-            let subtotal = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
-            let finalTotal = subtotal + shippingFee;
-
-            let itemsSummary = cart.map(i => `%0A• ${i.name} (${i.qty}×) - ${i.price * i.qty} د.أ`).join('');
-
-            const orderData = {
-                id: Date.now(),
-                name, phone, address,
-                items: cart,
-                total: finalTotal,
-                date: new Date().toLocaleString('ar-JO')
-            };
-
-            let orders = JSON.parse(localStorage.getItem('store_orders')) || [];
-            orders.push(orderData);
-            localStorage.setItem('store_orders', JSON.stringify(orders));
-
-            const msg = `طلب جديد من المتجر ✨%0A*الاسم:* ${name}%0A*رقم الهاتف:* ${phone}%0A*العنوان:* ${address || 'غير محدد'}%0A%0A*المنتجات:*${itemsSummary}%0A%0A*المجموع الفرعي:* ${subtotal} د.أ%0A*التوصيل:* ${shippingFee} د.أ%0A*المجموع النهائي:* ${finalTotal} د.أ`;
-
-            window.open(`https://wa.me/${whatsappNumber}?text=${msg}`, '_blank');
-
-            cart = [];
-            updateCartUI();
-            toggleCart(false);
-            document.getElementById('checkoutForm').reset();
-            alert('تم إرسال الطلب بنجاح وسيتواصل معك الفريق قريبًا!');
-        }
-
-        window.onload = init;
-    </script>
-</body>
-</html>
+                <span>المجموع النهائي
