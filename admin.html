@@ -3,184 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم - Elegant Rose</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary-pink: #ff6584;
-            --light-pink: #fff0f3;
-            --dark-pink: #e04f6d;
-            --white: #ffffff;
-            --gray-bg: #f8f9fa;
-            --text-color: #333;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
-        body { background-color: var(--gray-bg); color: var(--text-color); display: flex; min-height: 100vh; }
-
-        aside {
-            width: 250px; background: var(--white); border-left: 1px solid #eee; padding: 20px;
-            display: flex; flex-direction: column;
-        }
-
-        aside .logo { font-size: 18px; font-weight: 700; color: var(--primary-pink); margin-bottom: 30px; }
-
-        main { flex: 1; padding: 30px; overflow-y: auto; }
-
-        .card {
-            background: var(--white); padding: 20px; border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.02); margin-bottom: 25px; border: 1px solid #eee;
-        }
-
-        .card h3 { color: var(--dark-pink); margin-bottom: 15px; font-size: 17px; }
-
-        .form-row { display: flex; gap: 15px; align-items: flex-end; }
-        .form-group { flex: 1; }
-        .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 5px; }
-        .form-group input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; }
-
-        .btn-pink {
-            background: var(--primary-pink); color: white; border: none; padding: 10px 20px;
-            border-radius: 6px; font-weight: 700; cursor: pointer;
-        }
-        .btn-pink:hover { background: var(--dark-pink); }
-
-        table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; }
-        th, td { padding: 12px 15px; text-align: right; border-bottom: 1px solid #eee; font-size: 14px; }
-        th { background: var(--light-pink); color: var(--dark-pink); }
-
-        .btn-delete { background: #ff4d4d; color: white; border: none; padding: 4px 10px; border-radius: 4px; cursor: pointer; }
-    </style>
+    <title>لوحة التحكم | ELGANT ROSE</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <aside>
-        <div class="logo"><i class="fa-solid fa-sliders"></i> لوحة التحكم</div>
-        <a href="index.html" style="color:#777; text-decoration:none;"><i class="fa-solid fa-arrow-right"></i> العودة للمتجر</a>
-    </aside>
-
-    <main>
-        <!-- إعدادات سعر التوصيل بالدينار الأردني -->
-        <div class="card">
-            <h3><i class="fa-solid fa-truck"></i> تحديد سعر التوصيل (بالدينار الأردني)</h3>
-            <div class="form-row">
-                <div class="form-group">
-                    <label>تكلفة التوصيل (د.أ)</label>
-                    <input type="number" id="shippingFeeInput" placeholder="3">
-                </div>
-                <button class="btn-pink" onclick="saveShippingFee()">حفظ التعديل</button>
-            </div>
+    <header>
+        <div class="logo-container">
+            <img src="LOGO.JPE" alt="ELGANT ROSE Logo">
+            <h1>لوحة المدير - ELGANT ROSE</h1>
         </div>
+        <nav>
+            <a href="index.html">عرض المتجر</a>
+            <a href="admin.html">لوحة التحكم</a>
+        </nav>
+    </header>
 
-        <!-- إضافة منتج -->
-        <div class="card">
-            <h3>إضافة منتج جديد</h3>
-            <form id="addProductForm">
-                <div class="form-group" style="margin-bottom:10px;">
-                    <label>اسم المنتج</label>
-                    <input type="text" id="pName" placeholder="مثال: فستان كاجوال" required>
+    <div class="container">
+        <h2>إضافة قطعة ملابس جديدة</h2>
+        
+        <div style="background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 30px;">
+            <form id="product-form" onsubmit="addProduct(event)">
+                <div style="margin-bottom: 15px;">
+                    <label style="display:block; margin-bottom: 5px; font-weight: bold;">اسم القطعة:</label>
+                    <input type="text" id="p-name" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px;">
                 </div>
-                <div class="form-group" style="margin-bottom:10px;">
-                    <label>السعر (د.أ)</label>
-                    <input type="number" id="pPrice" placeholder="مثال: 25" required>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display:block; margin-bottom: 5px; font-weight: bold;">السعر (بالدينار الأردني د.أ):</label>
+                    <input type="number" step="0.01" id="p-price" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px;">
                 </div>
-                <div class="form-group" style="margin-bottom:15px;">
-                    <label>رابط الصورة</label>
-                    <input type="url" id="pImage" placeholder="رابط صورة المنتج..." required>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display:block; margin-bottom: 5px; font-weight: bold;">رابط صورة Google Drive (أو معرف الملف):</label>
+                    <input type="text" id="p-image" placeholder="مثال: https://drive.google.com/file/d/xxxx/view" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px;">
+                    <small style="color: #666; display: block; margin-top: 5px;">تأكد من جعل مشاركة ملف الصورة في الدرايف: "أي شخص لديه الرابط يمكنه العرض".</small>
                 </div>
-                <button type="submit" class="btn-pink">إضافة المنتج</button>
+
+                <button type="submit">إضافة المنتج للمتجر</button>
             </form>
         </div>
 
-        <!-- المنتجات -->
-        <div class="card">
-            <h3>المنتجات المعروضة</h3>
-            <table>
-                <thead>
-                    <tr><th>الصورة</th><th>اسم المنتج</th><th>السعر</th><th>إجراء</th></tr>
-                </thead>
-                <tbody id="adminProductsTable"></tbody>
-            </table>
+        <h2>المنتجات الحالية في المخزون</h2>
+        <div style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+            <ul id="admin-products-list" style="list-style: none; padding: 0;">
+                <!-- سيتم عرض المنتجات هنا مع زر الحذف -->
+            </ul>
         </div>
-
-        <!-- سجل طلبات الزبائن وتواصل الهواتف -->
-        <div class="card">
-            <h3>سجل طلبات وأرقام هواتف الزبائن</h3>
-            <table>
-                <thead>
-                    <tr><th>الاسم</th><th>الهاتف</th><th>المجموع الكلي</th><th>التاريخ</th></tr>
-                </thead>
-                <tbody id="ordersTable"></tbody>
-            </table>
-        </div>
-    </main>
+    </div>
 
     <script>
-        function loadAdmin() {
-            // تحميل رسوم التوصيل
-            const currentShipping = localStorage.getItem('shipping_fee') || 3;
-            document.getElementById('shippingFeeInput').value = currentShipping;
+        function addProduct(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('p-name').value;
+            const price = parseFloat(document.getElementById('p-price').value);
+            const image = document.getElementById('p-image').value;
 
-            // تحميل المنتجات
-            const products = JSON.parse(localStorage.getItem('store_products')) || [];
-            const pTable = document.getElementById('adminProductsTable');
-            pTable.innerHTML = '';
-            products.forEach((p, idx) => {
-                pTable.innerHTML += `
-                    <tr>
-                        <td><img src="${p.image}" width="40" height="40" style="object-fit:cover; border-radius:4px;"></td>
-                        <td>${p.name}</td>
-                        <td>${p.price} د.أ</td>
-                        <td><button class="btn-delete" onclick="deleteProduct(${idx})">حذف</button></td>
-                    </tr>
+            const newProduct = { name, price, image };
+
+            let products = JSON.parse(localStorage.getItem('elgant_products')) || [];
+            products.push(newProduct);
+            localStorage.setItem('elgant_products', JSON.stringify(products));
+
+            alert('تمت إضافة القطعة بنجاح وربطها بالمتجر!');
+            document.getElementById('product-form').reset();
+            loadAdminProducts();
+        }
+
+        function loadAdminProducts() {
+            const listContainer = document.getElementById('admin-products-list');
+            let products = JSON.parse(localStorage.getItem('elgant_products')) || [];
+
+            if (products.length === 0) {
+                listContainer.innerHTML = '<p>لا توجد منتجات مضافة بعد.</p>';
+                return;
+            }
+
+            listContainer.innerHTML = '';
+            products.forEach((product, index) => {
+                listContainer.innerHTML += `
+                    <li style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee;">
+                        <span><strong>${product.name}</strong> - ${product.price} د.أ</span>
+                        <button style="background-color: #bc6c25;" onclick="deleteProduct(${index})">حذف</button>
+                    </li>
                 `;
             });
-
-            // تحميل الطلبات
-            const orders = JSON.parse(localStorage.getItem('store_orders')) || [];
-            const oTable = document.getElementById('ordersTable');
-            oTable.innerHTML = '';
-            orders.forEach(o => {
-                oTable.innerHTML += `
-                    <tr>
-                        <td>${o.name}</td>
-                        <td><a href="tel:${o.phone}" style="color:var(--primary-pink); font-weight:bold;">${o.phone}</a></td>
-                        <td>${o.total} د.أ</td>
-                        <td>${o.date}</td>
-                    </tr>
-                `;
-            });
         }
 
-        function saveShippingFee() {
-            const fee = document.getElementById('shippingFeeInput').value;
-            localStorage.setItem('shipping_fee', fee);
-            alert('تم تحديث رسوم التوصيل بنجاح!');
+        function deleteProduct(index) {
+            let products = JSON.parse(localStorage.getItem('elgant_products')) || [];
+            products.splice(index, 1);
+            localStorage.setItem('elgant_products', JSON.stringify(products));
+            loadAdminProducts();
         }
 
-        document.getElementById('addProductForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            let products = JSON.parse(localStorage.getItem('store_products')) || [];
-            products.push({
-                id: Date.now(),
-                name: document.getElementById('pName').value,
-                price: parseFloat(document.getElementById('pPrice').value),
-                image: document.getElementById('pImage').value
-            });
-            localStorage.setItem('store_products', JSON.stringify(products));
-            this.reset();
-            loadAdmin();
-        });
-
-        function deleteProduct(idx) {
-            let products = JSON.parse(localStorage.getItem('store_products')) || [];
-            products.splice(idx, 1);
-            localStorage.setItem('store_products', JSON.stringify(products));
-            loadAdmin();
-        }
-
-        window.onload = loadAdmin;
+        window.onload = loadAdminProducts;
     </script>
 </body>
 </html>
