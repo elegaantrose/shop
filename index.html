@@ -343,11 +343,13 @@
 </head>
 <body>
 
-    <!-- الهيدر -->
+    <!-- الهيدر مع الشعار من GitHub -->
     <header>
         <a href="index.html" class="logo-container">
-            <!-- مسار الشعار بصيغة jpg -->
-            <img src="logo/logo.jpg" alt="Elegant Rose" class="logo-img" onerror="this.src='https://via.placeholder.com/50/ff6584/ffffff?text=Rose';">
+            <img src="https://raw.githubusercontent.com/elegaantrose/shop/main/logo/logo.jpg" 
+                 alt="Elegant Rose Logo" 
+                 class="logo-img" 
+                 onerror="this.src='https://raw.githubusercontent.com/elegaantrose/shop/master/logo/logo.jpg';">
             <div class="logo-text">
                 <span class="logo-title-en">ELEGANT ROSE</span>
                 <span class="logo-title-ar">الوردة الأنيقة</span>
@@ -366,7 +368,7 @@
     <!-- واجهة الترحيب -->
     <section class="hero">
         <h1>متجر الوردة الأنيقة</h1>
-        <p>تألقي بمنتجاتنا الفاخرة ذات التصاميم العصرية.</p>
+        <p>تألقي بأرقى أزياء وملابس الموضة العصرية في الأردن.</p>
     </section>
 
     <!-- المنتجات -->
@@ -383,29 +385,27 @@
             <button class="cart-close-btn" onclick="toggleCart(false)"><i class="fa-solid fa-xmark"></i></button>
         </div>
 
-        <div class="cart-items" id="cartItemsContainer">
-            <!-- تعبئة السلة تلقائياً -->
-        </div>
+        <div class="cart-items" id="cartItemsContainer"></div>
 
         <div class="cart-footer">
             <div class="summary-row">
                 <span>المجموع الفرعي:</span>
-                <span id="subtotalPrice">0 ر.س</span>
+                <span id="subtotalPrice">0 د.أ</span>
             </div>
             <div class="summary-row">
                 <span>رسوم التوصيل:</span>
-                <span id="shippingPrice">0 ر.س</span>
+                <span id="shippingPrice">0 د.أ</span>
             </div>
             <div class="summary-row summary-total">
                 <span>المجموع النهائي:</span>
-                <span id="finalTotalPrice">0 ر.س</span>
+                <span id="finalTotalPrice">0 د.أ</span>
             </div>
 
             <!-- نموذج الطلب برقم التواصل -->
             <form class="checkout-form" id="checkoutForm" onsubmit="submitOrder(event)">
                 <input type="text" id="custName" placeholder="الاسم الكامل *" required>
-                <input type="tel" id="custPhone" placeholder="رقم الهاتف للتواصل *" required>
-                <textarea id="custAddress" rows="2" placeholder="العنوان تفصيلياً (المدينة/الخي)..."></textarea>
+                <input type="tel" id="custPhone" placeholder="رقم الهاتف للتواصل (مثال: 0791234567) *" required>
+                <textarea id="custAddress" rows="2" placeholder="العنوان التفصيلي (المدينة / الحي)..."></textarea>
                 <button type="submit" class="btn-checkout">
                     <i class="fa-brands fa-whatsapp"></i> تأكيد الطلب والتواصل
                 </button>
@@ -420,17 +420,19 @@
     </footer>
 
     <script>
+        // منتجات افتراضية بالدينار الأردني
         const defaultProducts = [
-            { id: 1, name: "فستان سهرة أنيق", price: 250, image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=500" },
-            { id: 2, name: "جاكيت ربيعي وردي", price: 180, image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500" }
+            { id: 1, name: "فستان سهرة أنيق", price: 35, image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=500" },
+            { id: 2, name: "جاكيت ربيعي وردي", price: 25, image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500" },
+            { id: 3, name: "قميص ناعم راقي", price: 18, image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500" }
         ];
 
         let cart = [];
-        let shippingFee = 20; // الافتراضي
-        const whatsappNumber = "966500000000"; // رقم المتجر للتواصل
+        let shippingFee = 3; // سعر التوصيل الافتراضي بالدينار الأردني
+        const whatsappNumber = "962700000000"; // استبدله برقم واتساب المتجر للأردن (مع 962)
 
         function init() {
-            // تحميل رسوم التوصيل
+            // تحميل رسوم التوصيل المخزنة
             const savedShipping = localStorage.getItem('shipping_fee');
             if (savedShipping !== null) shippingFee = parseFloat(savedShipping);
 
@@ -451,7 +453,7 @@
                         </div>
                         <div class="product-info">
                             <h3 class="product-title">${p.name}</h3>
-                            <div class="product-price">${p.price} ر.س</div>
+                            <div class="product-price">${p.price} د.أ</div>
                             <button class="btn-add-cart" onclick="addToCart(${p.id}, '${p.name}', ${p.price}, '${p.image}')">
                                 <i class="fa-solid fa-plus"></i> إضافة للسلة
                             </button>
@@ -497,7 +499,7 @@
                             <img src="${item.image}" alt="">
                             <div class="cart-item-details">
                                 <div class="cart-item-title">${item.name}</div>
-                                <div class="cart-item-price">${item.price} ر.س</div>
+                                <div class="cart-item-price">${item.price} د.أ</div>
                                 <div class="cart-qty-controls">
                                     <button class="cart-qty-btn" onclick="updateCartQty(${idx}, -1)">-</button>
                                     <span>${item.qty}</span>
@@ -513,9 +515,9 @@
             const currentShipping = cart.length > 0 ? shippingFee : 0;
             const finalTotal = subtotal + currentShipping;
 
-            document.getElementById('subtotalPrice').innerText = subtotal + " ر.س";
-            document.getElementById('shippingPrice').innerText = currentShipping + " ر.س";
-            document.getElementById('finalTotalPrice').innerText = finalTotal + " ر.س";
+            document.getElementById('subtotalPrice').innerText = subtotal + " د.أ";
+            document.getElementById('shippingPrice').innerText = currentShipping + " د.أ";
+            document.getElementById('finalTotalPrice').innerText = finalTotal + " د.أ";
         }
 
         function toggleCart(open) {
@@ -537,28 +539,24 @@
             let subtotal = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
             let finalTotal = subtotal + shippingFee;
 
-            // إعداد تفاصيل الطلب
-            let itemsSummary = cart.map(i => `%0A• ${i.name} (${i.qty}×) - ${i.price * i.qty} ر.س`).join('');
+            let itemsSummary = cart.map(i => `%0A• ${i.name} (${i.qty}×) - ${i.price * i.qty} د.أ`).join('');
 
             const orderData = {
                 id: Date.now(),
                 name, phone, address,
                 items: cart,
                 total: finalTotal,
-                date: new Date().toLocaleString('ar-EG')
+                date: new Date().toLocaleString('ar-JO')
             };
 
-            // حفظ الطلب في سجل الطلبات للمدير
             let orders = JSON.parse(localStorage.getItem('store_orders')) || [];
             orders.push(orderData);
             localStorage.setItem('store_orders', JSON.stringify(orders));
 
-            // إنشاء رسالة واتساب
-            const msg = `طلب جديد من المتجر ✨%0A*الاسم:* ${name}%0A*رقم الهاتف:* ${phone}%0A*العنوان:* ${address || 'غير محدد'}%0A%0A*المنتجات:*${itemsSummary}%0A%0A*المجموع الفرعي:* ${subtotal} ر.س%0A*التوصيل:* ${shippingFee} ر.س%0A*المجموع النهائي:* ${finalTotal} ر.س`;
+            const msg = `طلب جديد من المتجر ✨%0A*الاسم:* ${name}%0A*رقم الهاتف:* ${phone}%0A*العنوان:* ${address || 'غير محدد'}%0A%0A*المنتجات:*${itemsSummary}%0A%0A*المجموع الفرعي:* ${subtotal} د.أ%0A*التوصيل:* ${shippingFee} د.أ%0A*المجموع النهائي:* ${finalTotal} د.أ`;
 
             window.open(`https://wa.me/${whatsappNumber}?text=${msg}`, '_blank');
 
-            // تفريغ السلة
             cart = [];
             updateCartUI();
             toggleCart(false);
