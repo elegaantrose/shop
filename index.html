@@ -296,7 +296,7 @@
             margin-top: 10px;
         }
 
-        /* نموذج إدخال هاتف الزبون والطلب */
+        /* نموذج الطلب برقم التواصل */
         .checkout-form {
             margin-top: 15px;
             display: flex;
@@ -343,13 +343,13 @@
 </head>
 <body>
 
-    <!-- الهيدر مع الشعار من GitHub -->
+    <!-- الهيدر مع رابط صورة الشعار LOGO.JPE من GitHub -->
     <header>
         <a href="index.html" class="logo-container">
-            <img src="https://raw.githubusercontent.com/elegaantrose/shop/main/logo/logo.jpg" 
+            <img src="https://raw.githubusercontent.com/elegaantrose/shop/main/LOGO.JPE" 
                  alt="Elegant Rose Logo" 
                  class="logo-img" 
-                 onerror="this.src='https://raw.githubusercontent.com/elegaantrose/shop/master/logo/logo.jpg';">
+                 onerror="this.src='https://raw.githubusercontent.com/elegaantrose/shop/main/logo/LOGO.JPE';">
             <div class="logo-text">
                 <span class="logo-title-en">ELEGANT ROSE</span>
                 <span class="logo-title-ar">الوردة الأنيقة</span>
@@ -420,7 +420,6 @@
     </footer>
 
     <script>
-        // منتجات افتراضية بالدينار الأردني
         const defaultProducts = [
             { id: 1, name: "فستان سهرة أنيق", price: 35, image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=500" },
             { id: 2, name: "جاكيت ربيعي وردي", price: 25, image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500" },
@@ -428,11 +427,10 @@
         ];
 
         let cart = [];
-        let shippingFee = 3; // سعر التوصيل الافتراضي بالدينار الأردني
-        const whatsappNumber = "962700000000"; // استبدله برقم واتساب المتجر للأردن (مع 962)
+        let shippingFee = 3;
+        const whatsappNumber = "962700000000";
 
         function init() {
-            // تحميل رسوم التوصيل المخزنة
             const savedShipping = localStorage.getItem('shipping_fee');
             if (savedShipping !== null) shippingFee = parseFloat(savedShipping);
 
