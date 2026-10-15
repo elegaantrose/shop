@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر الأناقة - ملابس عصرية</title>
-    <!-- استيراد خطوط وتصاميم أيقونات -->
+    <title>Elegant Rose | الوردة الأنيقة - ملابس عصرية</title>
+    <!-- استيراد الخطوط والأيقونات -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -29,7 +29,7 @@
             color: var(--text-color);
         }
 
-        /* رأس الصفحة */
+        /* رأس الصفحة (Header) */
         header {
             background-color: var(--white);
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
@@ -39,16 +39,41 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 8%;
+            padding: 12px 8%;
         }
 
-        .logo {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--primary-pink);
+        /* تنسيق الشعار (الصورة والاسم) */
+        .logo-container {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 48px;
+            width: auto;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-title-en {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-pink);
+            letter-spacing: 1px;
+            line-height: 1.1;
+        }
+
+        .logo-title-ar {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--dark-pink);
         }
 
         nav a {
@@ -74,7 +99,7 @@
         /* قسم الواجهة الرئيسية (Hero) */
         .hero {
             background: linear-gradient(135deg, var(--light-pink) 0%, #ffe3e8 100%);
-            padding: 80px 8%;
+            padding: 70px 8%;
             text-align: center;
             display: flex;
             flex-direction: column;
@@ -83,13 +108,13 @@
         }
 
         .hero h1 {
-            font-size: 42px;
+            font-size: 38px;
             color: var(--dark-pink);
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .hero p {
-            font-size: 18px;
+            font-size: 17px;
             color: #666;
             margin-bottom: 25px;
             max-width: 600px;
@@ -113,12 +138,12 @@
 
         /* قسم المنتجات */
         .products-section {
-            padding: 60px 8%;
+            padding: 50px 8%;
         }
 
         .section-title {
             text-align: center;
-            font-size: 30px;
+            font-size: 28px;
             color: var(--text-color);
             margin-bottom: 40px;
             position: relative;
@@ -136,8 +161,8 @@
 
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 25px;
         }
 
         .product-card {
@@ -160,7 +185,7 @@
 
         .product-img-container {
             width: 100%;
-            height: 280px;
+            height: 270px;
             background-color: var(--gray-bg);
             overflow: hidden;
         }
@@ -177,14 +202,14 @@
         }
 
         .product-info {
-            padding: 20px;
+            padding: 18px;
             text-align: center;
         }
 
         .product-title {
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .product-price {
@@ -194,9 +219,9 @@
             margin-bottom: 15px;
         }
 
-        .btn-add-cart {
-            background-color: var(--light-pink);
-            color: var(--primary-pink);
+        .btn-order-now {
+            background-color: var(--primary-pink);
+            color: var(--white);
             border: none;
             padding: 10px 20px;
             border-radius: 8px;
@@ -204,46 +229,163 @@
             cursor: pointer;
             width: 100%;
             transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
-        .btn-add-cart:hover {
-            background-color: var(--primary-pink);
-            color: var(--white);
+        .btn-order-now:hover {
+            background-color: var(--dark-pink);
         }
 
-        /* تذييل الصفحة (Footer) */
+        /* نافذة طلب المنتج المنبثقة (Modal) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
+            width: 100%;
+            max-width: 450px;
+            border-radius: 15px;
+            padding: 25px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 20px;
+            color: #888;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        .modal-close:hover { color: var(--dark-pink); }
+
+        .modal-title {
+            font-size: 20px;
+            color: var(--dark-pink);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .selected-product-summary {
+            background: var(--light-pink);
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: right;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: var(--primary-pink);
+        }
+
+        .btn-confirm-order {
+            background-color: #25D366; /* لون الواتساب */
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+
+        .btn-confirm-order:hover {
+            background-color: #1ebc57;
+        }
+
+        /* التذييل (Footer) */
         footer {
             background-color: var(--light-pink);
             color: var(--text-color);
             text-align: center;
-            padding: 30px 8%;
+            padding: 25px 8%;
             margin-top: 50px;
             font-weight: 600;
         }
 
         .admin-link-btn {
             display: inline-block;
-            margin-top: 15px;
-            font-size: 14px;
+            margin-top: 12px;
+            font-size: 13px;
             color: var(--dark-pink);
             text-decoration: none;
         }
-        .admin-link-btn:hover {
-            text-decoration: underline;
-        }
+        .admin-link-btn:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
 
-    <!-- الهيدر -->
+    <!-- الهيدر مع الشعار الجديد -->
     <header>
-        <div class="logo">
-            <i class="fa-solid fa-shirt"></i> متجر الأناقة
-        </div>
+        <a href="index.html" class="logo-container">
+            <!-- مسار صورة الشعار في مجلد logo -->
+            <img src="logo/logo.png" alt="Elegant Rose" class="logo-img" onerror="this.src='https://via.placeholder.com/50/ff6584/ffffff?text=Rose';">
+            <div class="logo-text">
+                <span class="logo-title-en">ELEGANT ROSE</span>
+                <span class="logo-title-ar">الوردة الأنيقة</span>
+            </div>
+        </a>
         <nav>
             <a href="#">الرئيسية</a>
             <a href="#products">المنتجات</a>
-            <a href="#">عن المتجر</a>
+            <a href="#">تواصل معنا</a>
         </nav>
         <div class="header-icons">
             <i class="fa-solid fa-heart"></i>
@@ -253,33 +395,69 @@
 
     <!-- واجهة الترحيب -->
     <section class="hero">
-        <h1>أحدث صيحات الموضة النسائية والرجالية</h1>
-        <p>تألقي بإطلالة عصرية ومميزة مع تشكيلة ملابسنا الجديدة المصنوعة خصيصاً لأجلك.</p>
-        <a href="#products" class="btn-shop">تسوق الآن</a>
+        <h1>مرحباً بكم في الوردة الأنيقة</h1>
+        <p>اكتشفي أرقى التشكيلات والملابس المتميزة المصممة بكل حب لتناسب إطلالتك الساحرة.</p>
+        <a href="#products" class="btn-shop">استعرضي المنتجات</a>
     </section>
 
     <!-- قسم المنتجات -->
     <section class="products-section" id="products">
-        <h2 class="section-title">منتجاتنا المميزة</h2>
+        <h2 class="section-title">تشكيلتنا المميزة</h2>
         <div class="products-grid" id="productsContainer">
-            <!-- سيتم حقن المنتجات ديناميكياً هنا عبر الجافاسكريبت -->
+            <!-- يتم إضافة المنتجات عبر الجافاسكريبت -->
         </div>
     </section>
 
+    <!-- نافذة طلب المنتج (Modal) -->
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeOrderModal()"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="modal-title">تأكيد طلب المنتج</h3>
+            
+            <div class="selected-product-summary">
+                <span id="modalProductName">اسم المنتج</span>
+                <span id="modalProductPrice" style="color: var(--primary-pink);">0 ر.س</span>
+            </div>
+
+            <form id="orderForm">
+                <div class="form-group">
+                    <label for="customerName">الاسم الكامل *</label>
+                    <input type="text" id="customerName" placeholder="أدخلي اسمكِ الكريم" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerPhone">رقم الهاتف / التواصل *</label>
+                    <input type="tel" id="customerPhone" placeholder="مثال: 0501234567" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerAddress">العنوان أو ملاحظات الطلب</label>
+                    <textarea id="customerAddress" rows="3" placeholder="المدينة، الحي، أو المقاس المطلوب..."></textarea>
+                </div>
+                <button type="submit" class="btn-confirm-order">
+                    <i class="fa-brands fa-whatsapp"></i> إرسال الطلب عبر الواتساب
+                </button>
+            </form>
+        </div>
+    </div>
+
     <!-- الفوتر -->
     <footer>
-        <p>جميع الحقوق محفوظة © 2026 - متجر الأناقة</p>
-        <a href="admin.html" class="admin-link-btn"><i class="fa-solid fa-lock"></i> الدخول للوحة التحكم (المدير)</a>
+        <p>جميع الحقوق محفوظة © 2026 - Elegant Rose | الوردة الأنيقة</p>
+        <a href="admin.html" class="admin-link-btn"><i class="fa-solid fa-lock"></i> لوحة التحكم (المدير)</a>
     </footer>
 
     <script>
-        // جلب المنتجات المخزنة من المتصفح أو عرض منتجات افتراضية
+        // المنتجات الافتراضية
         const defaultProducts = [
-            { id: 1, name: "فستان سهرة زهري أنيق", price: "250", image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=500" },
-            { id: 2, name: "جاكيت صيفي وردي كاجوال", price: "180", image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500" },
-            { id: 3, name: "قميص قطني ناعم", price: "120", image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500" }
+            { id: 1, name: "فستان سهرة أنيق - وردي", price: "250", image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=500" },
+            { id: 2, name: "جاكيت ربيعي راقي", price: "180", image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500" },
+            { id: 3, name: "بلوزة حريرية أنيقة", price: "130", image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=500" }
         ];
 
+        let currentSelectedProduct = null;
+        // قم بتعديل هذا الرقم إلى رقم الواتساب الخاص بمتجرك (مع المفتاح الدولي بدون +)
+        const storeWhatsAppNumber = "966500000000"; 
+
+        // تحميل وعرض المنتجات
         function loadCustomerProducts() {
             let products = JSON.parse(localStorage.getItem('store_products'));
             if (!products) {
@@ -299,12 +477,48 @@
                         <div class="product-info">
                             <h3 class="product-title">${product.name}</h3>
                             <div class="product-price">${product.price} ر.س</div>
-                            <button class="btn-add-cart" onclick="alert('تمت الإضافة إلى السلة بنجاح!')">إضافة للسلة</button>
+                            <button class="btn-order-now" onclick="openOrderModal('${product.name}', '${product.price}')">
+                                <i class="fa-solid fa-cart-shopping"></i> طلب المنتج الآن
+                            </button>
                         </div>
                     </div>
                 `;
             });
         }
+
+        // فتح نافذة الطلب
+        function openOrderModal(name, price) {
+            currentSelectedProduct = { name, price };
+            document.getElementById('modalProductName').innerText = name;
+            document.getElementById('modalProductPrice').innerText = price + " ر.س";
+            document.getElementById('orderModal').classList.add('active');
+        }
+
+        // إغلاق نافذة الطلب
+        function closeOrderModal() {
+            document.getElementById('orderModal').classList.remove('active');
+            document.getElementById('orderForm').reset();
+        }
+
+        // معالجة إرسال الطلب عبر الواتساب
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('customerName').value;
+            const phone = document.getElementById('customerPhone').value;
+            const address = document.getElementById('customerAddress').value;
+
+            // صياغة رسالة الطلب الموجهة للواتساب
+            const message = `مرحباً متجر الوردة الأنيقة ✨%0Aأود طلب المنتج التالي:%0A-%20*المنتج:* ${currentSelectedProduct.name}%0A-%20*السعر:* ${currentSelectedProduct.price} ر.س%0A%0A*بيانات التوصيل والتواصل:*%0A-%20*الاسم:* ${name}%0A-%20*رقم التواصل:* ${phone}%0A-${address ? '%20*العنوان/ملاحظات:* ' + address : ''}`;
+
+            // رابط فتح الواتساب
+            const whatsappUrl = `https://wa.me/${storeWhatsAppNumber}?text=${message}`;
+
+            // فتح الواتساب في نافذة جديدة
+            window.open(whatsappUrl, '_blank');
+
+            closeOrderModal();
+        });
 
         window.onload = loadCustomerProducts;
     </script>
