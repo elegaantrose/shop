@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ELGANT ROSE | الوردة الأنيقة</title>
-    <!-- استدعاء الخطوط المنيقة المطابقة لصفحة الإشراف -->
+    <!-- استدعاء الخطوط -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* الألوان والخطوط المطابقة تماماً لصفحة لوحة الإشراف */
         :root {
             --primary-rose: #c48b9f;
             --primary-dark: #8c5365;
@@ -38,7 +37,6 @@
             direction: rtl;
         }
 
-        /* الشريط العلوي */
         .top-banner {
             background-color: var(--primary-dark);
             color: white;
@@ -48,7 +46,6 @@
             font-weight: 300;
         }
 
-        /* الهيدر وشريط التنقل المطابق للإشراف */
         header {
             background: white;
             padding: 15px 30px;
@@ -143,7 +140,6 @@
             border-radius: 10px;
         }
 
-        /* بنر الواجهة (Hero Section) */
         .hero {
             padding: 60px 20px;
             text-align: center;
@@ -182,12 +178,6 @@
             font-family: 'Alexandria', sans-serif;
         }
 
-        .btn-primary:hover {
-            opacity: 0.95;
-            transform: translateY(-2px);
-        }
-
-        /* شبكة المنتجات */
         .container {
             max-width: 1200px;
             margin: 0 auto 60px;
@@ -276,11 +266,6 @@
             font-family: 'Alexandria', sans-serif;
         }
 
-        .add-to-cart-btn:hover {
-            opacity: 0.95;
-        }
-
-        /* سلة المشتريات المنزلقة */
         .cart-overlay {
             position: fixed;
             top: 0;
@@ -288,3 +273,298 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+            display: none;
+        }
+
+        .cart-drawer {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 370px;
+            max-width: 90%;
+            height: 100%;
+            background: white;
+            z-index: 1001;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-drawer.open { right: 0; }
+
+        .cart-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--bg-rose-light);
+        }
+
+        .cart-header h3 {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 24px;
+            color: var(--primary-dark);
+            margin: 0;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--text-muted);
+        }
+
+        .cart-body {
+            padding: 20px;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .cart-item-title { font-weight: 600; font-size: 13px; }
+        .cart-item-price { color: var(--primary-dark); font-size: 13px; margin-top: 4px; font-weight: bold; }
+
+        .cart-footer {
+            padding: 20px;
+            border-top: 1px solid var(--border-color);
+            background: var(--bg-rose-light);
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--text-dark);
+        }
+
+        .whatsapp-btn {
+            width: 100%;
+            background-color: #25d366;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: 'Alexandria', sans-serif;
+        }
+
+        footer {
+            background-color: white;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            text-align: center;
+            padding: 25px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-banner">
+        <i class="fa-solid fa-gem"></i> متجر ELGANT ROSE - التوصيل متوفر لجميع المحافظات في المملكة الأردنية الهاشمية
+    </div>
+
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo-box">
+                <!-- رابط الشعار الخام الصحيح من GitHub -->
+                <img src="https://raw.githubusercontent.com/elegaantrose/shop/main/logo.jpg" alt="ELGANT ROSE Logo" onerror="this.src='https://via.placeholder.com/50?text=Rose'">
+                <div class="logo-title">
+                    <h1>ELGANT ROSE</h1>
+                    <span>الوردة الأنيقة</span>
+                </div>
+            </a>
+
+            <nav>
+                <a href="index.html">الرئيسية</a>
+                <a href="admin.html" style="color: var(--primary-dark); font-weight: 600;">لوحة الإشراف</a>
+                <button class="cart-btn" onclick="toggleCart()">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span>السلة</span>
+                    <span class="cart-badge" id="cart-count">0</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h2>تشكيلة الأزياء النسائية</h2>
+        <p>اكتشفي أحدث التصاميم والقطع المميزة المعروضة لدى متجر الوردة الأنيقة بأسعار بالدينار الأردني.</p>
+        <a href="#products-section" class="btn-primary">تصفحي القطع الحالية</a>
+    </section>
+
+    <div class="container" id="products-section">
+        <div class="section-title">
+            <h3>أحدث القطع المعروضة</h3>
+        </div>
+        <div id="products-container" class="products-grid"></div>
+    </div>
+
+    <div class="cart-overlay" id="cart-overlay" onclick="toggleCart()"></div>
+    <div class="cart-drawer" id="cart-drawer">
+        <div class="cart-header">
+            <h3>سلة المشتريات</h3>
+            <button class="close-btn" onclick="toggleCart()"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="cart-body" id="cart-items"></div>
+        <div class="cart-footer">
+            <div class="total-row">
+                <span>المجموع الكلي:</span>
+                <span id="total-price">0.00 د.أ</span>
+            </div>
+            <button class="whatsapp-btn" onclick="checkoutWhatsApp()">
+                <i class="fa-brands fa-whatsapp"></i> إتمام الطلب عبر واتساب
+            </button>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 جميع الحقوق محفوظة لـ <strong>ELGANT ROSE - الوردة الأنيقة</strong></p>
+    </footer>
+
+    <script>
+        function formatDriveImageUrl(inputUrl) {
+            if (!inputUrl) return '';
+            let fileId = inputUrl.trim();
+            if (inputUrl.includes('drive.google.com')) {
+                const match = inputUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
+                if (match && match[1]) {
+                    fileId = match[1];
+                }
+            }
+            return `https://lh3.googleusercontent.com/d/${fileId}`;
+        }
+
+        let cart = [];
+
+        function toggleCart() {
+            const drawer = document.getElementById('cart-drawer');
+            const overlay = document.getElementById('cart-overlay');
+            if (drawer.classList.contains('open')) {
+                drawer.classList.remove('open');
+                overlay.style.display = 'none';
+            } else {
+                drawer.classList.add('open');
+                overlay.style.display = 'block';
+            }
+        }
+
+        function loadProducts() {
+            const container = document.getElementById('products-container');
+            const products = JSON.parse(localStorage.getItem('elgant_products')) || [];
+
+            if (products.length === 0) {
+                container.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted);">
+                        <i class="fa-solid fa-box-open" style="font-size: 36px; color: var(--primary-rose); margin-bottom: 15px;"></i>
+                        <p>لا توجد قطع مضافة حالياً. يمكنك إضافتها من لوحة الإشراف.</p>
+                    </div>`;
+                return;
+            }
+
+            container.innerHTML = '';
+            products.forEach((product) => {
+                const directImgUrl = formatDriveImageUrl(product.image);
+                
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div class="product-image-wrap">
+                        <img src="${directImgUrl}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/300x400?text=ELGANT+ROSE'">
+                    </div>
+                    <div class="product-info">
+                        <h4>${product.name}</h4>
+                        <div class="price">${product.price} دينار أردني</div>
+                        <button class="add-to-cart-btn" onclick="addToCart('${product.name}', ${product.price})">
+                            <i class="fa-solid fa-bag-shopping"></i> إضافـة للسـلة
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            updateCartUI();
+            toggleCart();
+        }
+
+        function updateCartUI() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartCount = document.getElementById('cart-count');
+            const totalPriceEl = document.getElementById('total-price');
+
+            cartCount.innerText = cart.length;
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p style="text-align: center; color: #888; margin-top: 20px;">السلة فارغة حالياً.</p>';
+                totalPriceEl.innerText = '0.00 د.أ';
+                return;
+            }
+
+            cartItemsContainer.innerHTML = '';
+            let total = 0;
+            cart.forEach((item, index) => {
+                total += item.price;
+                cartItemsContainer.innerHTML += `
+                    <div class="cart-item">
+                        <div style="flex-grow: 1;">
+                            <div class="cart-item-title">${item.name}</div>
+                            <div class="cart-item-price">${item.price} د.أ</div>
+                        </div>
+                        <button style="background: none; border: none; color: #d9534f; cursor: pointer; font-size: 15px;" onclick="removeFromCart(${index})">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                `;
+            });
+            totalPriceEl.innerText = `${total.toFixed(2)} د.أ`;
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function checkoutWhatsApp() {
+            if (cart.length === 0) {
+                alert('السلة فارغة!');
+                return;
+            }
+            let message = "مرحباً متجر الوردة الأنيقة ELGANT ROSE، أرغب بطلب القطع التالية:\n\n";
+            let total = 0;
+            cart.forEach((item, i) => {
+                message += `${i+1}. ${item.name} - بسعر: ${item.price} د.أ\n`;
+                total += item.price;
+            });
+            message += `\nالمجموع الكلي: ${total.toFixed(2)} دينار أردني`;
+
+            let whatsappUrl = `https://wa.me/962700000000?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        window.onload = loadProducts;
+    </script>
+</body>
+</html>
