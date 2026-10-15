@@ -3,72 +3,264 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم | ELGANT ROSE</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>لوحة المدير | ELGANT ROSE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-rose: #c48b9f;
+            --primary-dark: #8c5365;
+            --bg-rose-light: #fbf7f6;
+            --text-dark: #2b1b20;
+            --border-color: #eededc;
+        }
+
+        body {
+            font-family: 'Alexandria', sans-serif;
+            background-color: var(--bg-rose-light);
+            color: var(--text-dark);
+            direction: rtl;
+            padding: 0;
+            margin: 0;
+        }
+
+        header {
+            background: white;
+            padding: 15px 30px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-box img {
+            height: 45px;
+            width: 45px;
+            border-radius: 50%;
+            border: 2px solid var(--primary-rose);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* شاشة تسجيل الدخول */
+        .login-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            max-width: 420px;
+            margin: 60px auto;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .login-card h2 {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 30px;
+            color: var(--primary-dark);
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+            text-align: right;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-family: 'Alexandria', sans-serif;
+            box-sizing: border-box;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-rose) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 13px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        /* لوحة التحكم الرئيسية */
+        .admin-dashboard {
+            display: none;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+
+        .card h3 {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 26px;
+            margin-bottom: 20px;
+            color: var(--primary-dark);
+        }
+
+        .product-list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f7eded;
+        }
+
+        .btn-delete {
+            background: #d9534f;
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .logout-btn {
+            background: none;
+            border: 1px solid #d9534f;
+            color: #d9534f;
+            padding: 6px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+    </style>
 </head>
 <body>
 
     <header>
-        <div class="logo-container">
-            <img src="LOGO.JPE" alt="ELGANT ROSE Logo">
-            <h1>لوحة المدير - ELGANT ROSE</h1>
+        <div class="logo-box">
+            <img src="https://raw.githubusercontent.com/elegaantrose/shop/main/logo.jpg" alt="Logo">
+            <h2 style="font-size: 18px;">لوحة إشراف ELGANT ROSE</h2>
         </div>
-        <nav>
-            <a href="index.html">عرض المتجر</a>
-            <a href="admin.html">لوحة التحكم</a>
-        </nav>
+        <button id="logout-btn" class="logout-btn" style="display: none;" onclick="logout()">تسجيل الخروج</button>
     </header>
 
     <div class="container">
-        <h2>إضافة قطعة ملابس جديدة</h2>
-        
-        <div style="background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 30px;">
-            <form id="product-form" onsubmit="addProduct(event)">
-                <div style="margin-bottom: 15px;">
-                    <label style="display:block; margin-bottom: 5px; font-weight: bold;">اسم القطعة:</label>
-                    <input type="text" id="p-name" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px;">
+        <!-- شاشة الدخول -->
+        <div id="login-section" class="login-card">
+            <h2>تسجيل دخول المدير</h2>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>اسم المستخدم:</label>
+                    <input type="text" id="username" placeholder="أدخل اسم المستخدم" required>
                 </div>
-
-                <div style="margin-bottom: 15px;">
-                    <label style="display:block; margin-bottom: 5px; font-weight: bold;">السعر (بالدينار الأردني د.أ):</label>
-                    <input type="number" step="0.01" id="p-price" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px;">
+                <div class="form-group">
+                    <label>كلمة السر:</label>
+                    <input type="password" id="password" placeholder="أدخل كلمة السر" required>
                 </div>
-
-                <div style="margin-bottom: 15px;">
-                    <label style="display:block; margin-bottom: 5px; font-weight: bold;">رابط صورة Google Drive (أو معرف الملف):</label>
-                    <input type="text" id="p-image" placeholder="مثال: https://drive.google.com/file/d/xxxx/view" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 5px;">
-                    <small style="color: #666; display: block; margin-top: 5px;">تأكد من جعل مشاركة ملف الصورة في الدرايف: "أي شخص لديه الرابط يمكنه العرض".</small>
-                </div>
-
-                <button type="submit">إضافة المنتج للمتجر</button>
+                <button type="submit" class="btn-submit">دخول للوحة التحكم</button>
             </form>
         </div>
 
-        <h2>المنتجات الحالية في المخزون</h2>
-        <div style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
-            <ul id="admin-products-list" style="list-style: none; padding: 0;">
-                <!-- سيتم عرض المنتجات هنا مع زر الحذف -->
-            </ul>
+        <!-- لوحة التحكم المحمية -->
+        <div id="dashboard-section" class="admin-dashboard">
+            <div class="card">
+                <h3>إضافة قطعة ملابس جديدة</h3>
+                <form onsubmit="addProduct(event)">
+                    <div class="form-group">
+                        <label>اسم القطعة:</label>
+                        <input type="text" id="p-name" placeholder="مثال: فستان سهرة وردي فاخر" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>السعر (بالدينار الأردني د.أ):</label>
+                        <input type="number" step="0.01" id="p-price" placeholder="مثال: 35" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>رابط صورة Google Drive (أو معرف الملف):</label>
+                        <input type="text" id="p-image" placeholder="ضع رابط الصورة من جوجل درايف هنا" required>
+                        <small style="color: #888; font-size: 11px; display: block; margin-top: 4px;">سيتم تحويل رابط درايف تلقائياً وإظهاره فوراً بالمتجر.</small>
+                    </div>
+
+                    <button type="submit" class="btn-submit">نشر القطعة بالمتجر</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h3>إدارة القطع المعروضة</h3>
+                <div id="admin-products-list"></div>
+            </div>
         </div>
     </div>
 
     <script>
-        function addProduct(event) {
-            event.preventDefault();
-            
+        function checkAuth() {
+            const auth = sessionStorage.getItem('elgant_admin_logged');
+            if (auth === 'true') {
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('dashboard-section').style.display = 'block';
+                document.getElementById('logout-btn').style.display = 'block';
+                loadAdminProducts();
+            } else {
+                document.getElementById('login-section').style.display = 'block';
+                document.getElementById('dashboard-section').style.display = 'none';
+                document.getElementById('logout-btn').style.display = 'none';
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const u = document.getElementById('username').value;
+            const p = document.getElementById('password').value;
+
+            if (u === 'admin1' && p === '1986') {
+                sessionStorage.setItem('elgant_admin_logged', 'true');
+                checkAuth();
+            } else {
+                alert('اسم المستخدم أو كلمة السر غير صحيحة!');
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem('elgant_admin_logged');
+            checkAuth();
+        }
+
+        function addProduct(e) {
+            e.preventDefault();
             const name = document.getElementById('p-name').value;
             const price = parseFloat(document.getElementById('p-price').value);
             const image = document.getElementById('p-image').value;
 
-            const newProduct = { name, price, image };
-
             let products = JSON.parse(localStorage.getItem('elgant_products')) || [];
-            products.push(newProduct);
+            products.push({ name, price, image });
             localStorage.setItem('elgant_products', JSON.stringify(products));
 
-            alert('تمت إضافة القطعة بنجاح وربطها بالمتجر!');
-            document.getElementById('product-form').reset();
+            alert('تم نشر القطعة بنجاح!');
+            e.target.reset();
             loadAdminProducts();
         }
 
@@ -77,29 +269,31 @@
             let products = JSON.parse(localStorage.getItem('elgant_products')) || [];
 
             if (products.length === 0) {
-                listContainer.innerHTML = '<p>لا توجد منتجات مضافة بعد.</p>';
+                listContainer.innerHTML = '<p style="color: #777;">لا توجد منتجات مضافة بعد.</p>';
                 return;
             }
 
             listContainer.innerHTML = '';
             products.forEach((product, index) => {
                 listContainer.innerHTML += `
-                    <li style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee;">
-                        <span><strong>${product.name}</strong> - ${product.price} د.أ</span>
-                        <button style="background-color: #bc6c25;" onclick="deleteProduct(${index})">حذف</button>
-                    </li>
+                    <div class="product-list-item">
+                        <span><strong>${product.name}</strong> - <span style="color: var(--primary-dark); font-weight: bold;">${product.price} د.أ</span></span>
+                        <button class="btn-delete" onclick="deleteProduct(${index})">حذف القطعة</button>
+                    </div>
                 `;
             });
         }
 
         function deleteProduct(index) {
-            let products = JSON.parse(localStorage.getItem('elgant_products')) || [];
-            products.splice(index, 1);
-            localStorage.setItem('elgant_products', JSON.stringify(products));
-            loadAdminProducts();
+            if (confirm('هل أنت تأكد من حذف هذه القطعة؟')) {
+                let products = JSON.parse(localStorage.getItem('elgant_products')) || [];
+                products.splice(index, 1);
+                localStorage.setItem('elgant_products', JSON.stringify(products));
+                loadAdminProducts();
+            }
         }
 
-        window.onload = loadAdminProducts;
+        window.onload = checkAuth;
     </script>
 </body>
 </html>
