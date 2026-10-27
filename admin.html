@@ -23,8 +23,8 @@
             background-color: var(--bg-rose-light);
             color: var(--text-dark);
             direction: rtl;
-            padding: 0;
             margin: 0;
+            padding: 0;
         }
 
         header {
@@ -47,6 +47,7 @@
             width: 45px;
             border-radius: 50%;
             border: 2px solid var(--primary-rose);
+            object-fit: cover;
         }
 
         .container {
@@ -55,40 +56,45 @@
             padding: 0 20px;
         }
 
-        /* شاشة تسجيل الدخول */
-        .login-card {
+        .login-card, .card {
             background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+
+        .login-card {
             max-width: 420px;
             margin: 60px auto;
-            border: 1px solid var(--border-color);
             text-align: center;
         }
 
-        .login-card h2 {
+        .login-card h2, .card h3 {
             font-family: 'Aref Ruqaa', serif;
-            font-size: 30px;
             color: var(--primary-dark);
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
+        .login-card h2 { font-size: 30px; }
+        .card h3 { font-size: 26px; }
+
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 15px;
             text-align: right;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
             font-size: 13px;
             font-weight: 600;
         }
 
         .form-group input {
             width: 100%;
-            padding: 12px;
+            padding: 10px 12px;
             border: 1px solid var(--border-color);
             border-radius: 10px;
             font-family: 'Alexandria', sans-serif;
@@ -100,33 +106,15 @@
             background: linear-gradient(135deg, var(--primary-rose) 0%, var(--primary-dark) 100%);
             color: white;
             border: none;
-            padding: 13px;
+            padding: 12px;
             border-radius: 10px;
             font-weight: bold;
             cursor: pointer;
             font-size: 14px;
+            font-family: 'Alexandria', sans-serif;
         }
 
-        /* لوحة التحكم الرئيسية */
-        .admin-dashboard {
-            display: none;
-        }
-
-        .card {
-            background: white;
-            padding: 30px;
-            border-radius: 18px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
-            border: 1px solid var(--border-color);
-            margin-bottom: 30px;
-        }
-
-        .card h3 {
-            font-family: 'Aref Ruqaa', serif;
-            font-size: 26px;
-            margin-bottom: 20px;
-            color: var(--primary-dark);
-        }
+        .admin-dashboard { display: none; }
 
         .product-list-item {
             display: flex;
@@ -168,17 +156,17 @@
     </header>
 
     <div class="container">
-        <!-- شاشة الدخول -->
+        <!-- شاشة تسجيل الدخول -->
         <div id="login-section" class="login-card">
             <h2>تسجيل دخول المدير</h2>
             <form onsubmit="handleLogin(event)">
                 <div class="form-group">
                     <label>اسم المستخدم:</label>
-                    <input type="text" id="username" placeholder="أدخل اسم المستخدم" required>
+                    <input type="text" id="username" placeholder="admin1" required>
                 </div>
                 <div class="form-group">
                     <label>كلمة السر:</label>
-                    <input type="password" id="password" placeholder="أدخل كلمة السر" required>
+                    <input type="password" id="password" placeholder="1986" required>
                 </div>
                 <button type="submit" class="btn-submit">دخول للوحة التحكم</button>
             </form>
@@ -187,7 +175,7 @@
         <!-- لوحة التحكم المحمية -->
         <div id="dashboard-section" class="admin-dashboard">
             <div class="card">
-                <h3>إضافة قطعة ملابس جديدة</h3>
+                <h3>إضافة قطعة ملابس جديدة (مع 5 صور)</h3>
                 <form onsubmit="addProduct(event)">
                     <div class="form-group">
                         <label>اسم القطعة:</label>
@@ -200,12 +188,38 @@
                     </div>
 
                     <div class="form-group">
-                        <label>رابط صورة Google Drive (أو معرف الملف):</label>
-                        <input type="text" id="p-image" placeholder="ضع رابط الصورة من جوجل درايف هنا" required>
-                        <small style="color: #888; font-size: 11px; display: block; margin-top: 4px;">سيتم تحويل رابط درايف تلقائياً وإظهاره فوراً بالمتجر.</small>
+                        <label>نسبة الخصم (اختياري - مثلاً: 20% أو 10 دينار):</label>
+                        <input type="text" id="p-discount" placeholder="مثال: خصم 20% أو غير مطروح">
                     </div>
 
-                    <button type="submit" class="btn-submit">نشر القطعة بالمتجر</button>
+                    <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 20px 0;">
+
+                    <div class="form-group">
+                        <label><strong>1. الصورة الرئيسية الكبيرة (Google Drive رابط أو معرف):</strong></label>
+                        <input type="text" id="img-main" placeholder="رابط الصورة الرئيسية الكبيرة" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>2. الصورة التفصيلية الأولى (مربع صغير):</label>
+                        <input type="text" id="img-sub1" placeholder="رابط الصورة المربعة الأولى">
+                    </div>
+
+                    <div class="form-group">
+                        <label>3. الصورة التفصيلية الثانية (مربع صغير):</label>
+                        <input type="text" id="img-sub2" placeholder="رابط الصورة المربعة الثانية">
+                    </div>
+
+                    <div class="form-group">
+                        <label>4. الصورة التفصيلية الثالثة (مربع صغير):</label>
+                        <input type="text" id="img-sub3" placeholder="رابط الصورة المربعة الثالثة">
+                    </div>
+
+                    <div class="form-group">
+                        <label>5. الصورة التفصيلية الرابعة (مربع صغير):</label>
+                        <input type="text" id="img-sub4" placeholder="رابط الصورة المربعة الرابعة">
+                    </div>
+
+                    <button type="submit" class="btn-submit" style="margin-top: 15px;">نشر القطعة بالمتجر</button>
                 </form>
             </div>
 
@@ -253,10 +267,18 @@
             e.preventDefault();
             const name = document.getElementById('p-name').value;
             const price = parseFloat(document.getElementById('p-price').value);
-            const image = document.getElementById('p-image').value;
+            const discount = document.getElementById('p-discount').value;
+            
+            const images = [
+                document.getElementById('img-main').value,
+                document.getElementById('img-sub1').value,
+                document.getElementById('img-sub2').value,
+                document.getElementById('img-sub3').value,
+                document.getElementById('img-sub4').value
+            ].filter(img => img.trim() !== ''); // تصفية الروابط الفارغة
 
             let products = JSON.parse(localStorage.getItem('elgant_products')) || [];
-            products.push({ name, price, image });
+            products.push({ name, price, discount, images });
             localStorage.setItem('elgant_products', JSON.stringify(products));
 
             alert('تم نشر القطعة بنجاح!');
@@ -285,7 +307,7 @@
         }
 
         function deleteProduct(index) {
-            if (confirm('هل أنت تأكد من حذف هذه القطعة؟')) {
+            if (confirm('هل أنت متأكد من حذف هذه القطعة؟')) {
                 let products = JSON.parse(localStorage.getItem('elgant_products')) || [];
                 products.splice(index, 1);
                 localStorage.setItem('elgant_products', JSON.stringify(products));
