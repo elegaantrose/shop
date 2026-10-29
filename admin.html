@@ -1,70 +1,574 @@
-<div class="card">
-    <h3>إضافة قطعة محجبات جديدة (رفع حتى 5 صور مباشرة)</h3>
-    <form onsubmit="addNewProduct(event)">
-        <div class="form-group"><label>اسم القطعة:</label><input type="text" id="p-name" required></div>
-        <div class="form-group"><label>السعر (د.أ):</label><input type="number" step="0.01" id="p-price" required></div>
-        <div class="form-group"><label>الكمية المتوفرة:</label><input type="number" id="p-stock" value="10" required></div>
-        <div class="form-group"><label>الخصم (اختياري):</label><input type="text" id="p-discount" placeholder="مثال: خصم 20%"></div>
-        <div class="form-group">
-            <label>اختر الصور (<strong>حد أقصى 5 صور</strong>):</label>
-            <input type="file" id="p-images" multiple accept="image/*" required onchange="validateImageCount(this)">
-            <small style="color: #736267;">الصورة الأولى ستكون رئيسية، والباقي صوراً مصغرة تفصيلية.</small>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة الإشراف | ELGANT ROSE</title>
+    <!-- استدعاء الخطوط والأيقونات ومكتبة PDF -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <style>
+        :root {
+            --primary-rose: #c48b9f;
+            --primary-dark: #8c5365;
+            --bg-rose-light: #fbf7f6;
+            --text-dark: #2b1b20;
+            --text-muted: #736267;
+            --border-color: #eededc;
+            --card-bg: #ffffff;
+            --shadow: 0 5px 20px rgba(0,0,0,0.03);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Alexandria', sans-serif;
+            background-color: var(--bg-rose-light);
+            color: var(--text-dark);
+            direction: rtl;
+        }
+
+        .top-banner {
+            background-color: var(--primary-dark);
+            color: white;
+            text-align: center;
+            padding: 10px 15px;
+            font-size: 13px;
+        }
+
+        header {
+            background: white;
+            padding: 15px 30px;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-box img {
+            height: 45px;
+            width: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-rose);
+        }
+
+        .logo-title h1 {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 24px;
+            color: var(--text-dark);
+            margin: 0;
+            line-height: 1;
+        }
+
+        .logo-title span {
+            font-size: 11px;
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 950px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* شاشة تسجيل الدخول */
+        .login-card {
+            background: white;
+            padding: 40px;
+            border-radius: 18px;
+            box-shadow: var(--shadow);
+            max-width: 400px;
+            margin: 60px auto;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .login-card h2 {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 28px;
+            color: var(--primary-dark);
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+            text-align: right;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-family: 'Alexandria', sans-serif;
+            background: #fff;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-rose) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            font-family: 'Alexandria', sans-serif;
+            transition: var(--transition);
+        }
+
+        .btn-submit:hover { opacity: 0.92; }
+
+        /* لوحة التحكم */
+        .admin-dashboard { display: none; }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            margin-bottom: 30px;
+        }
+
+        .card h3 {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 26px;
+            margin-bottom: 20px;
+            color: var(--primary-dark);
+        }
+
+        .row-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .row-grid { grid-template-columns: 1fr; }
+        }
+
+        .item-row, .order-row {
+            background: var(--bg-rose-light);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .item-row, .order-row { flex-direction: column; align-items: stretch; }
+        }
+
+        .btn-delete {
+            background: #d9534f;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-family: 'Alexandria', sans-serif;
+            white-space: nowrap;
+        }
+
+        .btn-action {
+            background: linear-gradient(135deg, var(--primary-rose) 0%, var(--primary-dark) 100%);
+            color: white;
+            border: none;
+            padding: 9px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-family: 'Alexandria', sans-serif;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .logout-btn {
+            background: none;
+            border: 1px solid #d9534f;
+            color: #d9534f;
+            padding: 6px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: 'Alexandria', sans-serif;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-banner">
+        <i class="fa-solid fa-shield-halved"></i> لوحة الإدارة والتحكم المركزي - ELGANT ROSE
+    </div>
+
+    <header>
+        <a href="index.html" class="logo-box">
+            <img src="https://raw.githubusercontent.com/elegaantrose/shop/main/logo.jpg" alt="Logo">
+            <div class="logo-title">
+                <h1>ELGANT ROSE</h1>
+                <span>لوحة الإشراف</span>
+            </div>
+        </a>
+        <button id="logout-btn" class="logout-btn" style="display: none;" onclick="logout()">تسجيل الخروج</button>
+    </header>
+
+    <div class="container">
+        <!-- شاشة تسجيل الدخول -->
+        <div id="login-section" class="login-card">
+            <h2>تسجيل دخول المدير</h2>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>اسم المستخدم:</label>
+                    <input type="text" id="username" placeholder="admin1" required>
+                </div>
+                <div class="form-group">
+                    <label>كلمة السر:</label>
+                    <input type="password" id="password" placeholder="1986" required>
+                </div>
+                <button type="submit" class="btn-submit">دخول لوحة التحكم</button>
+            </form>
         </div>
-        <button type="submit">حفظ ورفع على قاعدة بيانات MongoDB</button>
-    </form>
-</div>
 
-<script>
-    // التحقق من عدم تجاوز 5 صور
-    function validateImageCount(input) {
-        if (input.files.length > 5) {
-            alert('عذراً، الحد الأقصى المسموح به هو 5 صور فقط!');
-            input.value = ''; // إعادة تعيين الحقل
+        <!-- لوحة التحكم المحمية والمتصلة بـ MongoDB -->
+        <div id="dashboard-section" class="admin-dashboard">
+            
+            <!-- نموذج إضافة منتج جديد -->
+            <div class="card">
+                <h3>إضافة قطعة جديدة (مع تفاصيل الألوان، المقاسات، والـ 5 صور)</h3>
+                <form onsubmit="addProduct(event)">
+                    <div class="row-grid">
+                        <div class="form-group">
+                            <label>اسم القطعة:</label>
+                            <input type="text" id="p-name" placeholder="مثال: فستان سهرة راقي" required>
+                        </div>
+                        <div class="form-group">
+                            <label>السعر (بالدينار الأردني د.أ):</label>
+                            <input type="number" step="0.01" id="p-price" placeholder="35.00" required>
+                        </div>
+                    </div>
+
+                    <div class="row-grid">
+                        <div class="form-group">
+                            <label>الكمية المتوفرة بالمخزون:</label>
+                            <input type="number" id="p-stock" value="10" required>
+                        </div>
+                        <div class="form-group">
+                            <label>نسبة الخصم (اختياري):</label>
+                            <input type="text" id="p-discount" placeholder="مثال: خصم 20%">
+                        </div>
+                    </div>
+
+                    <div class="row-grid">
+                        <div class="form-group">
+                            <label>الألوان المتاحة (مفصولة بفاصلة):</label>
+                            <input type="text" id="p-colors" placeholder="أسود، وردي، كحلي" required>
+                        </div>
+                        <div class="form-group">
+                            <label>المقاسات المتاحة:</label>
+                            <input type="text" id="p-sizes" placeholder="S, M, L, XL" required>
+                        </div>
+                    </div>
+
+                    <div class="row-grid">
+                        <div class="form-group">
+                            <label>توفر التوصيل:</label>
+                            <select id="p-delivery">
+                                <option value="التوصيل متوفر لجميع المحافظات">التوصيل متوفر لجميع المحافظات</option>
+                                <option value="التوصيل غير متوفر حالياً">التوصيل غير متوفر حالياً</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>اختر الصور من جهازك (<strong>حد أقصى 5 صور</strong>):</label>
+                            <input type="file" id="p-images" multiple accept="image/*" required onchange="validateImageCount(this)">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit" style="margin-top: 10px;">حفظ ونشر القطعة في قاعدة البيانات</button>
+                </form>
+            </div>
+
+            <!-- تقارير المخزون والمبيعات -->
+            <div class="card">
+                <h3>تقرير المخزون والقطع الأكثر مبيعا</h3>
+                <div id="stock-report-list">جاري التحميل...</div>
+            </div>
+
+            <!-- متابعة الطلبات والبحث برقم الفاتورة -->
+            <div class="card">
+                <h3>إدارة الطلبات الواردة (بحث برقم الفاتورة)</h3>
+                <div class="form-group">
+                    <input type="text" id="search-invoice" placeholder="ابحث برقم الفاتورة (مثال: ROS-123456)..." onkeyup="filterOrders()">
+                </div>
+                <div id="orders-list-container">جاري التحميل...</div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const API_URL = "http://localhost:3000/api";
+
+        function checkAuth() {
+            const auth = sessionStorage.getItem('elgant_admin_logged');
+            if (auth === 'true') {
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('dashboard-section').style.display = 'block';
+                document.getElementById('logout-btn').style.display = 'block';
+                loadAdminData();
+            } else {
+                document.getElementById('login-section').style.display = 'block';
+                document.getElementById('dashboard-section').style.display = 'none';
+                document.getElementById('logout-btn').style.display = 'none';
+            }
         }
-    }
 
-    function convertFilesToBase64(files) {
-        return Promise.all(Array.from(files).map(file => {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = error => reject(error);
-                reader.readAsDataURL(file);
+        function handleLogin(e) {
+            e.preventDefault();
+            const u = document.getElementById('username').value;
+            const p = document.getElementById('password').value;
+            if (u === 'admin1' && p === '1986') {
+                sessionStorage.setItem('elgant_admin_logged', 'true');
+                checkAuth();
+            } else {
+                alert('اسم المستخدم أو كلمة السر غير صحيحة!');
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem('elgant_admin_logged');
+            checkAuth();
+        }
+
+        function validateImageCount(input) {
+            if (input.files.length > 5) {
+                alert('عذراً، الحد الأقصى المسموح به هو 5 صور فقط!');
+                input.value = '';
+            }
+        }
+
+        function convertFilesToBase64(files) {
+            return Promise.all(Array.from(files).map(file => {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = error => reject(error);
+                    reader.readAsDataURL(file);
+                });
+            }));
+        }
+
+        async function addProduct(e) {
+            e.preventDefault();
+            const filesInput = document.getElementById('p-images');
+            if (filesInput.files.length === 0 || filesInput.files.length > 5) {
+                alert('يرجى اختيار من 1 إلى 5 صور كحد أقصى.');
+                return;
+            }
+
+            const base64Images = await convertFilesToBase64(filesInput.files);
+
+            const productData = {
+                name: document.getElementById('p-name').value,
+                price: parseFloat(document.getElementById('p-price').value),
+                stock: parseInt(document.getElementById('p-stock').value),
+                discount: document.getElementById('p-discount').value,
+                colors: document.getElementById('p-colors').value.split(',').map(s => s.trim()),
+                sizes: document.getElementById('p-sizes').value.split(',').map(s => s.trim()),
+                delivery: document.getElementById('p-delivery').value,
+                images: base64Images
+            };
+
+            try {
+                const res = await fetch(`${API_URL}/products`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(productData)
+                });
+                const data = await res.json();
+                if (data.success) {
+                    alert('تم حفظ القطعة بنجاح في قاعدة بيانات MongoDB!');
+                    e.target.reset();
+                    loadAdminData();
+                } else {
+                    alert('حدث خطأ أثناء الحفظ.');
+                }
+            } catch (err) {
+                alert('تعذر الاتصال بالخادم وقاعدة البيانات.');
+            }
+        }
+
+        let allOrdersCache = [];
+
+        async function loadAdminData() {
+            try {
+                // جلب المنتجات والمخزون
+                const prodRes = await fetch(`${API_URL}/products`);
+                const products = await prodRes.json();
+                
+                const stockContainer = document.getElementById('stock-report-list');
+                if (products.length === 0) {
+                    stockContainer.innerHTML = '<p>لا توجد منتجات مسجلة.</p>';
+                } else {
+                    stockContainer.innerHTML = '';
+                    products.sort((a, b) => (b.soldCount || 0) - (a.soldCount || 0));
+                    products.forEach((p, idx) => {
+                        stockContainer.innerHTML += `
+                            <div class="item-row">
+                                <div>
+                                    <strong>${idx + 1}. ${p.name}</strong><br>
+                                    <span style="font-size: 13px; color: var(--text-muted);">السعر: ${p.price} د.أ | المتبقي بالمخزون: <b style="color:green;">${p.stock}</b> | المباع: <b style="color:var(--primary-dark);">${p.soldCount || 0}</b></span>
+                                </div>
+                                <button class="btn-delete" onclick="deleteProduct('${p._id}')">حذف القطعة</button>
+                            </div>
+                        `;
+                    });
+                }
+
+                // جلب الطلبات
+                const ordRes = await fetch(`${API_URL}/orders`);
+                allOrdersCache = await ordRes.json();
+                renderOrders(allOrdersCache);
+
+            } catch (err) {
+                console.error("خطأ في جلب بيانات الإدارة:", err);
+            }
+        }
+
+        function renderOrders(orders) {
+            const container = document.getElementById('orders-list-container');
+            if (orders.length === 0) {
+                container.innerHTML = '<p>لا توجد طلبات واردة حالياً.</p>';
+                return;
+            }
+
+            container.innerHTML = '';
+            orders.slice().reverse().forEach(order => {
+                let itemsStr = order.items.map(i => `${i.name} (${i.price} د.أ)`).join(', ');
+                container.innerHTML += `
+                    <div class="order-row">
+                        <div>
+                            <strong>رقم الفاتورة: ${order.invoiceId}</strong> (${order.date})<br>
+                            <span style="font-size: 13px;">الزبون: <b>${order.customer.name}</b> | الهاتف: ${order.customer.phone}</span><br>
+                            <span style="font-size: 13px;">العنوان: ${order.customer.address} | محفظة أورنج: ${order.customer.wallet}</span><br>
+                            <span style="font-size: 13px; color: var(--primary-dark);">القطع: ${itemsStr}</span><br>
+                            <span style="font-size: 13px;">المجموع: <b>${order.total} د.أ</b> | الحالة: <span style="color:blue;">${order.status}</span></span>
+                        </div>
+                        <div>
+                            ${order.status !== 'تم التأكيد وإصدار الفاتورة' ? `
+                                <button class="btn-action" onclick="confirmOrderAndSendPDF('${order._id}', '${order.invoiceId}')">
+                                    <i class="fa-solid fa-file-pdf"></i> تأكيد وإرسال الفاتورة
+                                </button>
+                            ` : '<span style="color:green; font-weight:bold; font-size:13px;">تم الاعتماد ✓</span>'}
+                        </div>
+                    </div>
+                `;
             });
-        }));
-    }
-
-    async function addNewProduct(e) {
-        e.preventDefault();
-        const filesInput = document.getElementById('p-images');
-        
-        if (filesInput.files.length === 0 || filesInput.files.length > 5) {
-            alert('الرجاء اختيار بين 1 إلى 5 صور كحد أقصى.');
-            return;
         }
 
-        const base64Images = await convertFilesToBase64(filesInput.files);
-
-        const productData = {
-            name: document.getElementById('p-name').value,
-            price: parseFloat(document.getElementById('p-price').value),
-            stock: parseInt(document.getElementById('p-stock').value),
-            discount: document.getElementById('p-discount').value,
-            images: base64Images
-        };
-
-        const res = await fetch('http://localhost:3000/api/products', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(productData)
-        });
-        
-        const data = await res.json();
-        if(data.success) {
-            alert('تم رفع الصور والمنتج بنجاح وحفظهما في MongoDB!');
-            location.reload();
-        } else {
-            alert('حدث خطأ أثناء الرفع: ' + data.error);
+        // البحث برقم الفاتورة
+        function filterOrders() {
+            const query = document.getElementById('search-invoice').value.trim().toLowerCase();
+            const filtered = allOrdersCache.filter(o => o.invoiceId.toLowerCase().includes(query) || o.customer.name.toLowerCase().includes(query));
+            renderOrders(filtered);
         }
-    }
-</script>
+
+        async function deleteProduct(id) {
+            if (confirm('هل أنت متأكد من حذف هذه القطعة نهائياً من قاعدة البيانات؟')) {
+                await fetch(`${API_URL}/products/${id}`, { method: 'DELETE' });
+                loadAdminData();
+            }
+        }
+
+        // تأكيد الطلب، إنشاء وتصدير الفاتورة PDF وفتح واتساب الزبون
+        async function confirmOrderAndSendPDF(orderId, invoiceId) {
+            try {
+                const res = await fetch(`${API_URL}/orders/${orderId}/confirm`, { method: 'PUT' });
+                const data = await res.json();
+                
+                if (data.success) {
+                    const order = data.order;
+                    
+                    // توليد ملف الـ PDF
+                    const { jsPDF } = window.jspdf;
+                    const doc = new jsPDF();
+
+                    doc.setFont("helvetica", "bold");
+                    doc.text("ELGANT ROSE - Official Invoice", 105, 20, { align: "center" });
+                    doc.setFont("helvetica", "normal");
+                    doc.text(`Invoice ID: ${order.invoiceId}`, 20, 35);
+                    doc.text(`Date: ${order.date}`, 20, 45);
+                    doc.text(`Customer Name: ${order.customer.name}`, 20, 55);
+                    doc.text(`Phone: ${order.customer.phone}`, 20, 65);
+                    doc.text(`Delivery Address: ${order.customer.address}`, 20, 75);
+
+                    let y = 90;
+                    doc.text("Purchased Items:", 20, y);
+                    order.items.forEach((item, index) => {
+                        y += 10;
+                        doc.text(`${index + 1}. ${item.name} - ${item.price} JOD`, 25, y);
+                    });
+
+                    y += 20;
+                    doc.setFont("helvetica", "bold");
+                    doc.text(`Total Amount: ${order.total} JOD (Paid via Orange Money)`, 20, y);
+
+                    // حفظ وتحميل ملف الـ PDF محلياً
+                    doc.save(`Invoice_${order.invoiceId}.pdf`);
+
+                    // تجهيز رابط واتساب لإرسال الإشعار للزبون
+                    const msg = `مرحباً ${order.customer.name}، تم تأكيد دفعك واستلام طلبك بنجاح من متجر ELGANT ROSE برقم الفاتورة ${order.invoiceId}. المجموع الإجمالي: ${order.total} دينار أردني. شكراً لتسوقك معنا!`;
+                    const cleanPhone = order.customer.phone.replace(/^0/, '');
+                    const whatsappUrl = `https://wa.me/962${cleanPhone}?text=${encodeURIComponent(msg)}`;
+                    
+                    window.open(whatsappUrl, '_blank');
+                    loadAdminData();
+                }
+            } catch (err) {
+                alert('حدث خطأ أثناء تأكيد الطلب.');
+            }
+        }
+
+        window.onload = checkAuth;
+    </script>
+</body>
+</html>
