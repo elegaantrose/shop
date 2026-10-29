@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إتمام الدفع | ELGANT ROSE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-rose: #c48b9f;
+            --primary-dark: #8c5365;
+            --bg-rose-light: #fbf7f6;
+            --text-dark: #2b1b20;
+            --border-color: #eededc;
+        }
+
+        body {
+            font-family: 'Alexandria', sans-serif;
+            background-color: var(--bg-rose-light);
+            color: var(--text-dark);
+            direction: rtl;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: white;
+            padding: 15px 30px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-dark);
+        }
+
+        .logo-box img {
+            height: 45px;
+            width: 45px;
+            border-radius: 50%;
+            border: 2px solid var(--primary-rose);
+            object-fit: cover;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .checkout-card {
+            background: white;
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+            border: 1px solid var(--border-color);
+        }
+
+        h2 {
+            font-family: 'Aref Ruqaa', serif;
+            color: var(--primary-dark);
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-family: 'Alexandria', sans-serif;
+            box-sizing: border-box;
+        }
+
+        .orangemoney-btn {
+            width: 100%;
+            background-color: #ff7900;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-family: 'Alexandria', sans-serif;
+            margin-top: 20px;
+        }
+
+        .orangemoney-btn:hover { background-color: #e56d00; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo-box">
+            <img src="https://raw.githubusercontent.com/elegaantrose/shop/main/logo.jpg" alt="Logo">
+            <span style="font-family: 'Aref Ruqaa', serif; font-size: 20px;">ELGANT ROSE</span>
+        </a>
+        <a href="index.html" style="text-decoration: none; color: var(--primary-dark); font-weight: 600; font-size: 14px;">العودة للمتجر</a>
+    </header>
+
+    <div class="container">
+        <div class="checkout-card">
+            <h2>معلومات الشحن والدفع عبر أورنج موني</h2>
+            <form onsubmit="submitOrder(event)">
+                <div class="form-group">
+                    <label>الاسم الكامل:</label>
+                    <input type="text" id="c-name" placeholder="أدخل اسمك الكريم" required>
+                </div>
+                <div class="form-group">
+                    <label>رقم الهاتف:</label>
+                    <input type="tel" id="c-phone" placeholder="07xxxxxxxx" required>
+                </div>
+                <div class="form-group">
+                    <label>عنوان الشحن (المدينة / المنطقة):</label>
+                    <input type="text" id="c-address" placeholder="مثال: عمان، شارع الجاردنز" required>
+                </div>
+                <div class="form-group">
+                    <label>رقم محفظة أورنج موني:</label>
+                    <input type="text" id="c-wallet" placeholder="077xxxxxxxx" required>
+                </div>
+
+                <button type="submit" class="orangemoney-btn">
+                    <i class="fa-solid fa-wallet"></i> إتمام الدفع وإرسال الطلب
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- استدعاء ملف البيانات المركزى -->
+    <script src="store.js"></script>
+    <script>
+        function submitOrder(e) {
+            e.preventDefault();
+            const customerData = {
+                name: document.getElementById('c-name').value,
+                phone: document.getElementById('c-phone').value,
+                address: document.getElementById('c-address').value,
+                wallet: document.getElementById('c-wallet').value
+            };
+
+            const cart = StoreManager.getCart();
+            if (cart.length === 0) {
+                alert('السلة فارغة!');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            let total = 0;
+            cart.forEach(item => total += item.price);
+
+            // إنشاء الطلب وحفظه عبر مدير المتجر
+            const invoiceNo = StoreManager.createOrder(customerData, cart, total.toFixed(2));
+            StoreManager.saveCart([]); // تفريغ السلة
+
+            alert(`تم الدفع بنجاح! رقم الفاتورة الخاصة بك هو: ${invoiceNo}\nتم إرسال الطلب إلى لوحة الإشراف للمتابعة.`);
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
