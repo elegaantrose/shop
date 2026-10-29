@@ -4,1059 +4,144 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ELGANT ROSE | الوردة الأنيقة</title>
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700&family=Aref+Ruqaa:wght@400;700&display=swap" rel="stylesheet">
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'primary-rose': '#c48b9f',
-                        'primary-dark': '#8c5365',
-                        'bg-rose-light': '#fbf7f6',
-                        'text-dark': '#2b1b20',
-                        'border-color': '#eededc',
-                    },
-                    fontFamily: {
-                        heading: ['"Aref Ruqaa"', 'serif'],
-                        body: ['"Alexandria"', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
+        :root {
+            --primary-rose: #c48b9f;
+            --primary-dark: #8c5365;
+            --bg-rose-light: #fbf7f6;
+            --text-dark: #2b1b20;
+            --text-muted: #736267;
+            --border-color: #eededc;
+            --card-bg: #ffffff;
+            --shadow: 0 5px 20px rgba(0,0,0,0.03);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        img { pointer-events: none; }
+
         body {
             font-family: 'Alexandria', sans-serif;
-            background-color: #fbf7f6;
-            color: #2b1b20;
-            user-select: none; /* Disable text selection for content protection */
-            -webkit-user-select: none;
+            background-color: var(--bg-rose-light);
+            color: var(--text-dark);
+            direction: rtl;
         }
 
-        h1, h2, h3, .font-heading {
+        .top-banner {
+            background-color: var(--primary-dark);
+            color: white;
+            text-align: center;
+            padding: 10px 15px;
+            font-size: 13px;
+        }
+
+        header {
+            background: white;
+            padding: 15px 30px;
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-box img {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary-rose);
+        }
+
+        .logo-title h1 {
             font-family: 'Aref Ruqaa', serif;
+            font-size: 26px;
+            color: var(--text-dark);
+            margin: 0;
         }
 
-        /* Image protection styling */
-        img {
-            pointer-events: none; /* Prevents dragging and saving images */
-            -webkit-user-drag: none;
+        .logo-title span {
+            font-size: 11px;
+            color: var(--primary-dark);
+            font-weight: 600;
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #fbf7f6;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #c48b9f;
-            border-radius: 3px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #8c5365;
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 25px;
         }
 
-        .thumbnail-active {
-            border-color: #8c5365 !important;
-            opacity: 1 !important;
+        nav a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 14px;
         }
 
-        /* Smooth Drawer Animations */
-        .drawer-overlay {
-            transition: opacity 0.3s ease-in-out;
-        }
-        .drawer-content {
-            transition: transform 0.3s ease-in-out;
-        }
-    </style>
-</head>
-<body class="bg-bg-rose-light text-text-dark min-h-screen flex flex-col antialiased" oncontextmenu="return false;">
+        nav a:hover { color: var(--primary-dark); }
 
-    <!-- 1. ANNOUNCEMENT BAR -->
-    <div class="bg-primary-dark text-white text-xs sm:text-sm py-2 px-4 text-center font-medium flex justify-between items-center z-50">
-        <div class="container mx-auto flex flex-col sm:flex-row justify-between items-center gap-1">
-            <div class="flex items-center gap-2">
-                <span class="bg-primary-rose text-white px-2 py-0.5 rounded-full text-xs font-bold">عرض خاص</span>
-                <span>خصم يصل إلى 40% على التشكيلة الجديدة + توصيل مجاني للطلبات فوق 35 د.أ!</span>
-            </div>
-            <div class="flex items-center gap-2 font-mono dir-ltr">
-                <i class="fa-regular fa-clock text-primary-rose"></i>
-                <span id="countdown">05:12:43</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- 2. HEADER & NAVIGATION -->
-    <header class="bg-white sticky top-0 z-40 border-b border-border-color shadow-sm">
-        <div class="container mx-auto px-4 py-3 flex items-center justify-between gap-4">
-            <!-- Logo -->
-            <a href="#" class="flex items-center gap-3 group">
-                <img src="https://raw.githubusercontent.com/elegaantrose/shop/main/logo.jpg" 
-                     onerror="this.src='https://placehold.co/120x120/c48b9f/ffffff?text=Rose'" 
-                     alt="ELGANT ROSE Logo" 
-                     class="w-12 h-12 rounded-full border-2 border-primary-rose object-cover shadow-sm group-hover:scale-105 transition-transform">
-                <div>
-                    <h1 class="text-2xl font-bold text-primary-dark leading-tight tracking-wide">الوردة الأنيقة</h1>
-                    <span class="text-[10px] tracking-widest text-primary-rose uppercase font-bold block -mt-1">ELGANT ROSE</span>
-                </div>
-            </a>
-
-            <!-- Search Bar (Desktop) -->
-            <div class="hidden md:flex flex-1 max-w-md mx-6 relative">
-                <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="ابحثي عن فستان، بلوزة، عباية..." 
-                       class="w-full bg-bg-rose-light border border-border-color rounded-full py-2 pr-10 pl-4 text-sm focus:outline-none focus:border-primary-dark text-text-dark">
-                <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-2.5 text-primary-rose"></i>
-            </div>
-
-            <!-- Header Actions -->
-            <div class="flex items-center gap-4">
-                <!-- Admin Panel Trigger -->
-                <button onclick="openAdminModal()" title="لوحة التحكم" class="text-text-dark hover:text-primary-dark p-2 transition-colors">
-                    <i class="fa-solid fa-user-gear text-lg"></i>
-                </button>
-
-                <!-- Wishlist Toggle Button -->
-                <button onclick="toggleWishlistFilter()" id="wishlistHeaderBtn" title="المفضلة" class="text-text-dark hover:text-primary-dark p-2 relative transition-colors">
-                    <i class="fa-regular fa-heart text-xl"></i>
-                    <span id="wishlistBadge" class="absolute top-0 right-0 bg-primary-rose text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold hidden">0</span>
-                </button>
-
-                <!-- Shopping Cart Trigger -->
-                <button onclick="toggleCartDrawer(true)" class="bg-primary-rose hover:bg-primary-dark text-white px-4 py-2 rounded-full flex items-center gap-2 shadow-sm transition-colors text-sm font-medium">
-                    <i class="fa-solid fa-bag-shopping"></i>
-                    <span class="hidden sm:inline">السلة</span>
-                    <span id="cartBadge" class="bg-white text-primary-dark text-xs px-2 py-0.5 rounded-full font-bold">0</span>
-                </button>
-            </div>
-        </div>
-
-        <!-- Search Bar (Mobile) -->
-        <div class="px-4 pb-2 md:hidden">
-            <div class="relative w-full">
-                <input type="text" id="searchInputMobile" onkeyup="filterProductsMobile()" placeholder="ابحثي في المتجر..." 
-                       class="w-full bg-bg-rose-light border border-border-color rounded-full py-2 pr-10 pl-4 text-xs focus:outline-none focus:border-primary-dark">
-                <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-2.5 text-primary-rose text-xs"></i>
-            </div>
-        </div>
-
-        <!-- Category Nav -->
-        <nav class="border-t border-border-color/60 bg-white">
-            <div class="container mx-auto px-4 flex items-center justify-center overflow-x-auto whitespace-nowrap scrollbar-none py-2 gap-2 sm:gap-6 text-xs sm:text-sm font-medium">
-                <button onclick="filterCategory('all')" class="cat-btn active text-primary-dark border-b-2 border-primary-dark px-3 py-1 font-semibold">الكل</button>
-                <button onclick="filterCategory('فساتين')" class="cat-btn text-text-dark/70 hover:text-primary-dark px-3 py-1 transition-colors">فساتين</button>
-                <button onclick="filterCategory('بلوزات')" class="cat-btn text-text-dark/70 hover:text-primary-dark px-3 py-1 transition-colors">بلوزات</button>
-                <button onclick="filterCategory('عبايات')" class="cat-btn text-text-dark/70 hover:text-primary-dark px-3 py-1 transition-colors">عبايات</button>
-                <button onclick="filterCategory('إكسسوارات')" class="cat-btn text-text-dark/70 hover:text-primary-dark px-3 py-1 transition-colors">إكسسوارات</button>
-                <button onclick="filterCategory('تنزيلات')" class="cat-btn text-red-600 hover:text-red-700 px-3 py-1 font-bold transition-colors">🔥 تنزيلات</button>
-            </div>
-        </nav>
-    </header>
-
-    <!-- 3. MAIN CONTENT CONTAINER -->
-    <main class="container mx-auto px-4 py-8 flex-1">
-        
-        <!-- Active Filter Indicator -->
-        <div id="filterHeading" class="mb-6 flex justify-between items-center border-b border-border-color pb-3">
-            <h2 class="text-2xl font-bold text-primary-dark font-heading">أحدث التشكيلات والموديلات</h2>
-            <span id="productCount" class="text-xs sm:text-sm text-text-dark/60 font-medium">جاري تحميل المنتجات...</span>
-        </div>
-
-        <!-- Vertical SHEIN-Style Product List Container -->
-        <div id="productsContainer" class="flex flex-col gap-10 max-w-5xl mx-auto">
-            <!-- Dynamic Products will be rendered here -->
-        </div>
-
-        <!-- Empty State Message -->
-        <div id="emptyState" class="hidden text-center py-16">
-            <i class="fa-solid fa-box-open text-5xl text-primary-rose/50 mb-3"></i>
-            <p class="text-lg font-medium text-text-dark/70">لا توجد منتجات مطابقة للبحث أو القسم المختار.</p>
-            <button onclick="filterCategory('all')" class="mt-4 bg-primary-rose text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-primary-dark transition-colors">عرض جميع المنتجات</button>
-        </div>
-    </main>
-
-    <!-- 4. SLIDE-OUT SHOPPING CART DRAWER -->
-    <div id="cartDrawer" class="fixed inset-0 z-50 pointer-events-none hidden">
-        <!-- Backdrop -->
-        <div id="cartBackdrop" onclick="toggleCartDrawer(false)" class="drawer-overlay fixed inset-0 bg-black/40 opacity-0 pointer-events-auto"></div>
-        
-        <!-- Content Panel -->
-        <div id="cartContent" class="drawer-content fixed top-0 bottom-0 left-0 w-full max-w-md bg-white shadow-2xl pointer-events-auto flex flex-col transform -translate-x-full">
-            <!-- Header -->
-            <div class="p-4 border-b border-border-color flex justify-between items-center bg-bg-rose-light">
-                <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-bag-shopping text-primary-dark text-xl"></i>
-                    <h3 class="text-xl font-bold text-primary-dark font-heading">حقيبة التسوق</h3>
-                </div>
-                <button onclick="toggleCartDrawer(false)" class="text-text-dark/60 hover:text-text-dark p-2">
-                    <i class="fa-solid fa-xmark text-xl"></i>
-                </button>
-            </div>
-
-            <!-- Cart Items List -->
-            <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
-                <!-- Cart items dynamic render -->
-            </div>
-
-            <!-- Footer & Checkout -->
-            <div class="p-4 border-t border-border-color bg-white flex flex-col gap-3">
-                <div class="flex justify-between items-center text-sm">
-                    <span class="text-text-dark/70">المجموع الفرعي:</span>
-                    <span id="cartSubtotal" class="font-bold text-lg text-primary-dark">0.00 د.أ</span>
-                </div>
-                <p class="text-[11px] text-text-dark/60 text-center">الأسعار شاملة للضريبة. التوصيل يحسب عند الإتمام.</p>
-                
-                <!-- WhatsApp Direct Order Button -->
-                <button onclick="checkoutWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 shadow-md transition-colors text-base">
-                    <i class="fa-brands fa-whatsapp text-2xl"></i>
-                    إتمام الطلب عبر واتساب
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 5. ADMIN AUTHENTICATION & MANAGEMENT MODAL -->
-    <div id="adminModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 hidden">
-        <div class="bg-white w-full max-w-2xl rounded-2xl shadow-xl overflow-hidden max-h-[90vh] flex flex-col">
-            
-            <!-- Modal Header -->
-            <div class="bg-primary-dark text-white p-4 flex justify-between items-center">
-                <h3 class="text-xl font-bold font-heading flex items-center gap-2">
-                    <i class="fa-solid fa-user-shield"></i>
-                    لوحة إدارة المتجر - الوردة الأنيقة
-                </h3>
-                <button onclick="closeAdminModal()" class="text-white/80 hover:text-white">
-                    <i class="fa-solid fa-xmark text-xl"></i>
-                </button>
-            </div>
-
-            <!-- LOGIN FORM SECTION -->
-            <div id="adminLoginForm" class="p-6 flex flex-col gap-4">
-                <p class="text-sm text-text-dark/70">يرجى تسجيل الدخول للوصول إلى لوحة التحكم وإضافة المنتجات.</p>
-                <div>
-                    <label class="block text-xs font-bold text-text-dark mb-1">اسم المستخدم</label>
-                    <input type="text" id="adminUser" placeholder="admin1" class="w-full border border-border-color rounded-lg p-2.5 text-sm focus:border-primary-dark focus:outline-none">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-text-dark mb-1">كلمة المرور</label>
-                    <input type="password" id="adminPass" placeholder="••••" class="w-full border border-border-color rounded-lg p-2.5 text-sm focus:border-primary-dark focus:outline-none">
-                </div>
-                <div id="loginError" class="text-red-600 text-xs font-bold hidden">اسم المستخدم أو كلمة المرور غير صحيحة!</div>
-                <button onclick="handleAdminLogin()" class="bg-primary-rose hover:bg-primary-dark text-white py-2.5 rounded-lg font-bold transition-colors text-sm mt-2">
-                    تسجيل الدخول
-                </button>
-            </div>
-
-            <!-- ADMIN PANEL DASHBOARD SECTION (Hidden by default) -->
-            <div id="adminDashboard" class="p-6 overflow-y-auto hidden flex-1 flex flex-col gap-6">
-                <!-- Add New Product Form -->
-                <div class="bg-bg-rose-light p-4 rounded-xl border border-border-color">
-                    <h4 class="font-bold text-primary-dark text-base mb-3 border-b border-border-color pb-2">إضافة منتج جديد</h4>
-                    <form id="addProductForm" onsubmit="handleAddProduct(event)" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                        <div class="sm:col-span-2">
-                            <label class="block font-bold mb-1">اسم المنتج</label>
-                            <input type="text" id="newTitle" required placeholder="فستان سهرة أنيق ساتان" class="w-full p-2 border border-border-color rounded-lg focus:outline-none focus:border-primary-dark">
-                        </div>
-                        <div>
-                            <label class="block font-bold mb-1">السعر (دينار أردني)</label>
-                            <input type="number" step="0.01" id="newPrice" required placeholder="25.00" class="w-full p-2 border border-border-color rounded-lg focus:outline-none focus:border-primary-dark">
-                        </div>
-                        <div>
-                            <label class="block font-bold mb-1">السعر الأصلي / النسبة (اختياري)</label>
-                            <input type="text" id="newDiscount" placeholder="مثال: 35.00 د.أ أو خصم 20%" class="w-full p-2 border border-border-color rounded-lg focus:outline-none focus:border-primary-dark">
-                        </div>
-                        <div class="sm:col-span-2">
-                            <label class="block font-bold mb-1">القسم</label>
-                            <select id="newCategory" class="w-full p-2 border border-border-color rounded-lg focus:outline-none focus:border-primary-dark bg-white">
-                                <option value="فساتين">فساتين</option>
-                                <option value="بلوزات">بلوزات</option>
-                                <option value="عبايات">عبايات</option>
-                                <option value="إكسسوارات">إكسسوارات</option>
-                                <option value="تنزيلات">تنزيلات</option>
-                            </select>
-                        </div>
-                        
-                        <!-- 5 Image URLs (Google Drive Supported) -->
-                        <div class="sm:col-span-2 space-y-2 mt-1">
-                            <label class="block font-bold text-primary-dark">روابط الصور (تدعم روابط Google Drive وروابط الصور المباشرة):</label>
-                            <input type="url" id="img1" required placeholder="رابط الصورة الرئيسية 1 *" class="w-full p-2 border border-border-color rounded-lg focus:outline-none">
-                            <input type="url" id="img2" placeholder="رابط الصورة مصغرة 2" class="w-full p-2 border border-border-color rounded-lg focus:outline-none">
-                            <input type="url" id="img3" placeholder="رابط الصورة مصغرة 3" class="w-full p-2 border border-border-color rounded-lg focus:outline-none">
-                            <input type="url" id="img4" placeholder="رابط الصورة مصغرة 4" class="w-full p-2 border border-border-color rounded-lg focus:outline-none">
-                            <input type="url" id="img5" placeholder="رابط الصورة مصغرة 5" class="w-full p-2 border border-border-color rounded-lg focus:outline-none">
-                        </div>
-
-                        <button type="submit" class="sm:col-span-2 bg-primary-dark hover:bg-primary-rose text-white py-2.5 rounded-lg font-bold text-sm transition-colors mt-2">
-                            حفظ ونشر المنتج
-                        </button>
-                    </form>
-                </div>
-
-                <!-- Existing Products Manager -->
-                <div>
-                    <h4 class="font-bold text-primary-dark text-base mb-3">المنتجات الحالية (<span id="adminProductCount">0</span>)</h4>
-                    <div id="adminProductList" class="flex flex-col gap-2 max-h-60 overflow-y-auto pr-1">
-                        <!-- Admin products list dynamically filled -->
-                    </div>
-                </div>
-
-                <div class="border-t border-border-color pt-3 flex justify-between items-center">
-                    <button onclick="resetToDefaultData()" class="text-xs text-red-600 hover:underline">إعادة ضبط البيانات للوضع الافتراضي</button>
-                    <button onclick="handleAdminLogout()" class="text-xs bg-gray-200 hover:bg-gray-300 text-text-dark px-3 py-1.5 rounded-md font-semibold">تسجيل الخروج</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <!-- Notification Toast Box (Replaces alerts) -->
-    <div id="toast" class="fixed bottom-5 right-5 bg-primary-dark text-white px-5 py-3 rounded-xl shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 z-50 flex items-center gap-2 pointer-events-none text-sm font-medium">
-        <i class="fa-solid fa-circle-check text-primary-rose text-lg"></i>
-        <span id="toastMsg">تمت العملية بنجاح</span>
-    </div>
-
-    <!-- FOOTER -->
-    <footer class="bg-white border-t border-border-color mt-16 py-10 text-xs text-text-dark/70">
-        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="flex flex-col items-start gap-3">
-                <div class="flex items-center gap-2">
-                    <img src="https://raw.githubusercontent.com/elegaantrose/shop/main/logo.jpg" 
-                         onerror="this.src='https://placehold.co/120x120/c48b9f/ffffff?text=Rose'" 
-                         alt="Logo" class="w-10 h-10 rounded-full border border-primary-rose">
-                    <span class="font-bold text-lg text-primary-dark font-heading">الوردة الأنيقة | ELGANT ROSE</span>
-                </div>
-                <p class="leading-relaxed">متجركِ الأول للأناقة والموضة العصرية. نقدم لكِ أحدث التشكيلات العصرية بأعلى جودة وأنسب الأسعار في المملكة الأردنية الهاشمية.</p>
-            </div>
-            <div>
-                <h4 class="font-bold text-primary-dark text-sm mb-3 font-heading">روابط سريعة</h4>
-                <ul class="space-y-2">
-                    <li><a href="#" onclick="filterCategory('فساتين')" class="hover:text-primary-rose">فساتين سهرة ومناسبات</a></li>
-                    <li><a href="#" onclick="filterCategory('بلوزات')" class="hover:text-primary-rose">بلوزات وقمصان أنيقة</a></li>
-                    <li><a href="#" onclick="filterCategory('عبايات')" class="hover:text-primary-rose">عبايات كاجوال ورسمية</a></li>
-                    <li><a href="#" onclick="filterCategory('تنزيلات')" class="hover:text-primary-rose">عروض الخصومات المباشرة</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="font-bold text-primary-dark text-sm mb-3 font-heading">خدمة العملاء والتواصل</h4>
-                <p class="mb-2"><i class="fa-solid fa-location-dot text-primary-rose ml-2"></i> عمان، المملكة الأردنية الهاشمية</p>
-                <p class="mb-2"><i class="fa-brands fa-whatsapp text-primary-rose ml-2"></i> خدمة العملاء عبر الواتساب متوفرة 24/7</p>
-                <div class="flex gap-4 text-lg text-primary-dark mt-3">
-                    <a href="#" class="hover:text-primary-rose"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#" class="hover:text-primary-rose"><i class="fa-brands fa-facebook"></i></a>
-                    <a href="#" class="hover:text-primary-rose"><i class="fa-brands fa-tiktok"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="border-t border-border-color mt-8 pt-4 text-center text-[11px] text-text-dark/50">
-            جميع الحقوق محفوظة © 2026 لـ ELGANT ROSE | الوردة الأنيقة
-        </div>
-    </footer>
-
-    <!-- JAVASCRIPT APP LOGIC -->
-    <script>
-        // --- 1. DEFAULT INITIAL DATA ---
-        const SAMPLE_PRODUCTS = [
-            {
-                id: "prod_1",
-                title: "فستان سهرة أنيق بكسرات ميكادو مع حزام خصر بلون روز ساحر",
-                price: 38.00,
-                originalPrice: "52.00 د.أ",
-                category: "فساتين",
-                badge: "الأكثر مبيعاً",
-                rating: 5,
-                reviewsCount: 48,
-                images: [
-                    "https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&w=800&q=80",
-                    "https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=800&q=80",
-                    "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=800&q=80",
-                    "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80"
-                ]
-            },
-            {
-                id: "prod_2",
-                title: "بلوزة شيفون حريرية راقية بأكمام واسعة وتطريز ناعم",
-                price: 18.50,
-                originalPrice: "24.00 د.أ",
-                category: "بلوزات",
-                badge: "خصم 25%",
-                rating: 4,
-                reviewsCount: 29,
-                images: [
-                    "https://images.unsplash.com/photo-1551803091-e20673f15770?auto=format&fit=crop&w=800&q=80",
-                    "https://images.unsplash.com/photo-1534126511673-b6899657816a?auto=format&fit=crop&w=800&q=80",
-                    "https://images.unsplash.com/photo-1564257631407-4deb1f99d992?auto=format&fit=crop&w=800&q=80",
-                    "https://images.unsplash.com/photo-1485968579580-b6d095142e6e?auto=format&fit=crop&w=800&q=80"
-                ]
-            },
-            {
-                id: "prod_3",
-                title: "عباية خليجية مطرزة يدوياً بقماش كريب فاخر متوفرة بألوان دافئة",
-                price: 45.00,
-                originalPrice: "60.00 د.أ",
-                category: "عبايات",
-                badge: "جديد",
-                rating: 5,
-                reviewsCount: 35,
-                images: [
-                    "https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?auto=format&fit=crop&w=800&q=80",
-                    "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=800&q=80",
-                    "https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?auto=format&fit=crop&w=800&q=80",
-                    "https://images.unsplash.com/photo-1502716119720-b23a93e5fe1b?auto=format&fit=crop&w=800&q=80"
-                ]
-            },
-            {
-                id: "prod_4",
-                title: "طقم إكسسوارات لؤلؤ ناعم مطلي بماء الذهب عيار 18",
-                price: 12.00,
-                originalPrice: "18.00 د.أ",
-                category: "إكسسوارات",
-                badge: "تنزيلات",
-                rating: 5,
-                reviewsCount: 62,
-                images: [
-                    "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=800&q=80",
-                    "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=800&q=80",
-                    "https://images.unsplash.com/photo-1611591475281-912f2759e9ec?auto=format&fit=crop&w=800&q=80",
-                    "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=800&q=80"
-                ]
-            }
-        ];
-
-        // --- 2. GLOBAL STATE ---
-        let products = [];
-        let cart = [];
-        let wishlist = [];
-        let currentCategory = 'all';
-        let isAdminLoggedIn = false;
-        let onlyWishlistFilter = false;
-
-        // --- 3. INITIALIZATION ON LOAD ---
-        window.addEventListener('DOMContentLoaded', () => {
-            loadInitialData();
-            startCountdown();
-            renderProducts();
-            updateCartUI();
-            updateWishlistUI();
-        });
-
-        // Load or initialize localStorage
-        function loadInitialData() {
-            const storedProducts = localStorage.getItem('elgant_rose_products');
-            if (storedProducts) {
-                products = JSON.parse(storedProducts);
-            } else {
-                products = SAMPLE_PRODUCTS;
-                localStorage.setItem('elgant_rose_products', JSON.stringify(products));
-            }
-
-            const storedCart = localStorage.getItem('elgant_rose_cart');
-            if (storedCart) cart = JSON.parse(storedCart);
-
-            const storedWishlist = localStorage.getItem('elgant_rose_wishlist');
-            if (storedWishlist) wishlist = JSON.parse(storedWishlist);
+        .cart-btn {
+            position: relative;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 8px 16px;
+            font-size: 14px;
+            color: var(--primary-dark);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Alexandria', sans-serif;
+            font-weight: 600;
         }
 
-        // --- 4. GOOGLE DRIVE LINK TRANSFORMER ---
-        function transformDriveUrl(url) {
-            if (!url) return '';
-            url = url.trim();
-            // Check if it's a Google Drive link
-            const driveRegex = /(?:drive\.google\.com\/(?:file\/d\/|open\?id=)|lh3\.googleusercontent\.com\/d\/)([a-zA-Z0-9_-]+)/;
-            const match = url.match(driveRegex);
-            if (match && match[1]) {
-                return `https://lh3.googleusercontent.com/d/${match[1]}`;
-            }
-            return url;
+        .cart-badge {
+            background-color: var(--primary-dark);
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 2px 7px;
+            border-radius: 10px;
         }
 
-        // --- 5. RENDER PRODUCTS (SHEIN VERTICAL LAYOUT) ---
-        function renderProducts() {
-            const container = document.getElementById('productsContainer');
-            const emptyState = document.getElementById('emptyState');
-            container.innerHTML = '';
-
-            let filtered = products;
-
-            // Wishlist Filter Mode
-            if (onlyWishlistFilter) {
-                filtered = filtered.filter(p => wishlist.includes(p.id));
-                document.getElementById('filterHeading').querySelector('h2').innerText = "قائمة المفضلة لديـكِ";
-            } else {
-                document.getElementById('filterHeading').querySelector('h2').innerText = 
-                    currentCategory === 'all' ? "أحدث التشكيلات والموديلات" : `قسم: ${currentCategory}`;
-                
-                if (currentCategory !== 'all') {
-                    if (currentCategory === 'تنزيلات') {
-                        filtered = filtered.filter(p => p.badge && (p.badge.includes('خصم') || p.badge.includes('تنزيلات')));
-                    } else {
-                        filtered = filtered.filter(p => p.category === currentCategory);
-                    }
-                }
-            }
-
-            // Search Filter
-            const searchValMobile = document.getElementById('searchInputMobile').value.toLowerCase().trim();
-            const searchValDesk = document.getElementById('searchInput').value.toLowerCase().trim();
-            const query = searchValDesk || searchValMobile;
-
-            if (query) {
-                filtered = filtered.filter(p => p.title.toLowerCase().includes(query) || p.category.toLowerCase().includes(query));
-            }
-
-            document.getElementById('productCount').innerText = `${filtered.length} منتج متوفر`;
-
-            if (filtered.length === 0) {
-                emptyState.classList.remove('hidden');
-                return;
-            } else {
-                emptyState.classList.add('hidden');
-            }
-
-            // Render each product card in single-column row format (SHEIN style detail view)
-            filtered.forEach(product => {
-                const isWishlisted = wishlist.includes(product.id);
-                const activeImg = product.images[0] || 'https://placehold.co/600x800/fbf7f6/c48b9f?text=ELGANT+ROSE';
-
-                // Build Small Thumbnails HTML
-                let thumbnailsHTML = '';
-                product.images.forEach((imgUrl, index) => {
-                    if (!imgUrl) return;
-                    thumbnailsHTML += `
-                        <button onclick="swapMainImage('${product.id}', '${imgUrl}', this)" 
-                                class="w-14 h-18 sm:w-16 sm:h-20 rounded-lg overflow-hidden border-2 transition-all ${index === 0 ? 'thumbnail-active' : 'border-border-color opacity-70 hover:opacity-100'}">
-                            <img src="${imgUrl}" onerror="this.src='https://placehold.co/100x120/fbf7f6/c48b9f?text=Rose'" alt="thumb" class="w-full h-full object-cover">
-                        </button>
-                    `;
-                });
-
-                // Rating Stars HTML
-                let starsHTML = '';
-                for (let i = 1; i <= 5; i++) {
-                    starsHTML += `<i class="fa-solid fa-star ${i <= product.rating ? 'text-amber-400' : 'text-gray-300'} text-xs"></i>`;
-                }
-
-                const cardHTML = `
-                    <div id="product-card-${product.id}" class="bg-white rounded-2xl border border-border-color p-4 sm:p-6 shadow-sm hover:shadow-md transition-shadow">
-                        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                            
-                            <!-- Left / Main Image Column (SHEIN Style) -->
-                            <div class="lg:col-span-5 flex flex-col gap-3">
-                                <div class="relative w-full aspect-[3/4] bg-bg-rose-light rounded-xl overflow-hidden border border-border-color">
-                                    <img id="main-img-${product.id}" src="${activeImg}" 
-                                         onerror="this.src='https://placehold.co/600x800/fbf7f6/c48b9f?text=ELGANT+ROSE'" 
-                                         alt="${product.title}" 
-                                         class="w-full h-full object-cover transition-opacity duration-300">
-                                    
-                                    <!-- Badge -->
-                                    ${product.badge ? `<span class="absolute top-3 right-3 bg-primary-dark text-white text-xs px-3 py-1 rounded-full font-bold shadow-sm">${product.badge}</span>` : ''}
-                                    
-                                    <!-- Price Tag Overlay -->
-                                    <div class="absolute bottom-3 right-3 bg-white/90 backdrop-blur-md px-3 py-1 rounded-lg text-primary-dark font-bold text-sm shadow-sm dir-ltr">
-                                        ${product.price.toFixed(2)} JOD
-                                    </div>
-                                </div>
-
-                                <!-- Thumbnails Row -->
-                                <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-                                    ${thumbnailsHTML}
-                                </div>
-                            </div>
-
-                            <!-- Right / Details Column -->
-                            <div class="lg:col-span-7 flex flex-col justify-between h-full space-y-4">
-                                <div>
-                                    <!-- Category & Wishlist Header -->
-                                    <div class="flex justify-between items-center mb-2">
-                                        <span class="text-xs font-semibold text-primary-rose bg-bg-rose-light px-3 py-1 rounded-full border border-border-color">${product.category}</span>
-                                        <button onclick="toggleWishlist('${product.id}')" class="text-xl transition-colors ${isWishlisted ? 'text-red-500' : 'text-text-dark/40 hover:text-red-500'}">
-                                            <i class="${isWishlisted ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
-                                        </button>
-                                    </div>
-
-                                    <!-- Title -->
-                                    <h3 class="text-lg sm:text-xl font-bold text-text-dark leading-snug mb-2 font-body">${product.title}</h3>
-
-                                    <!-- Rating -->
-                                    <div class="flex items-center gap-2 mb-4">
-                                        <div class="flex gap-1">${starsHTML}</div>
-                                        <span class="text-xs text-text-dark/60 font-medium">(${product.reviewsCount || 12} تقييمات العملاء)</span>
-                                    </div>
-
-                                    <!-- Pricing Display -->
-                                    <div class="flex items-baseline gap-3 my-3">
-                                        <span class="text-2xl font-bold text-primary-dark">${product.price.toFixed(2)} د.أ</span>
-                                        ${product.originalPrice ? `<span class="text-sm text-text-dark/40 line-through">${product.originalPrice}</span>` : ''}
-                                    </div>
-
-                                    <hr class="border-border-color/60 my-4">
-
-                                    <!-- Size Picker -->
-                                    <div class="mb-4">
-                                        <label class="block text-xs font-bold text-text-dark mb-2">اختر القياس (المقاس):</label>
-                                        <div class="flex gap-2" id="size-group-${product.id}">
-                                            <button onclick="selectSize('${product.id}', 'S', this)" class="size-btn px-4 py-2 text-xs font-bold rounded-lg border border-border-color hover:border-primary-dark transition-all">S</button>
-                                            <button onclick="selectSize('${product.id}', 'M', this)" class="size-btn active bg-primary-dark text-white px-4 py-2 text-xs font-bold rounded-lg border border-primary-dark transition-all">M</button>
-                                            <button onclick="selectSize('${product.id}', 'L', this)" class="size-btn px-4 py-2 text-xs font-bold rounded-lg border border-border-color hover:border-primary-dark transition-all">L</button>
-                                            <button onclick="selectSize('${product.id}', 'XL', this)" class="size-btn px-4 py-2 text-xs font-bold rounded-lg border border-border-color hover:border-primary-dark transition-all">XL</button>
-                                        </div>
-                                    </div>
-
-                                    <!-- Quantity Selector -->
-                                    <div class="mb-6">
-                                        <label class="block text-xs font-bold text-text-dark mb-2">الكمية:</label>
-                                        <div class="flex items-center w-32 border border-border-color rounded-lg overflow-hidden bg-bg-rose-light">
-                                            <button onclick="adjustQty('${product.id}', -1)" class="w-10 py-1.5 text-text-dark hover:bg-border-color/50 font-bold text-sm">-</button>
-                                            <input type="number" id="qty-${product.id}" value="1" min="1" readonly class="w-12 text-center bg-transparent text-xs font-bold focus:outline-none">
-                                            <button onclick="adjustQty('${product.id}', 1)" class="w-10 py-1.5 text-text-dark hover:bg-border-color/50 font-bold text-sm">+</button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Action Button -->
-                                <div class="pt-2">
-                                    <button onclick="addToCart('${product.id}')" class="w-full bg-primary-rose hover:bg-primary-dark text-white py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-sm transition-all transform active:scale-95">
-                                        <i class="fa-solid fa-cart-plus text-base"></i>
-                                        أضف للسلة
-                                    </button>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                `;
-                container.innerHTML += cardHTML;
-            });
+        .hero {
+            padding: 50px 20px;
+            text-align: center;
+            background: white;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 30px;
         }
 
-        // --- 6. SWAP MAIN IMAGE IN PLACE ---
-        function swapMainImage(productId, newUrl, thumbBtn) {
-            const mainImg = document.getElementById(`main-img-${productId}`);
-            if (mainImg) {
-                mainImg.style.opacity = '0.4';
-                setTimeout(() => {
-                    mainImg.src = newUrl;
-                    mainImg.style.opacity = '1';
-                }, 150);
-            }
-
-            // Highlight Active Thumbnail
-            const parent = thumbBtn.parentElement;
-            const thumbs = parent.querySelectorAll('button');
-            thumbs.forEach(t => {
-                t.classList.remove('thumbnail-active');
-                t.classList.add('border-border-color', 'opacity-70');
-            });
-            thumbBtn.classList.add('thumbnail-active');
-            thumbBtn.classList.remove('opacity-70');
-        }
-
-        // --- 7. SIZE & QUANTITY CONTROL ---
-        const selectedSizes = {}; // holds current size for each product
-
-        function selectSize(productId, size, btn) {
-            selectedSizes[productId] = size;
-            const container = document.getElementById(`size-group-${productId}`);
-            const buttons = container.querySelectorAll('.size-btn');
-            buttons.forEach(b => {
-                b.classList.remove('bg-primary-dark', 'text-white');
-                b.classList.add('border-border-color');
-            });
-            btn.classList.add('bg-primary-dark', 'text-white');
-        }
-
-        function adjustQty(productId, delta) {
-            const qtyInput = document.getElementById(`qty-${productId}`);
-            let val = parseInt(qtyInput.value) || 1;
-            val += delta;
-            if (val < 1) val = 1;
-            qtyInput.value = val;
-        }
-
-        // --- 8. CART MANAGEMENT ---
-        function addToCart(productId) {
-            const product = products.find(p => p.id === productId);
-            if (!product) return;
-
-            const size = selectedSizes[productId] || 'M';
-            const qtyInput = document.getElementById(`qty-${productId}`);
-            const quantity = parseInt(qtyInput ? qtyInput.value : 1) || 1;
-
-            // Check if item with same size exists in cart
-            const existingIndex = cart.findIndex(item => item.id === productId && item.size === size);
-
-            if (existingIndex > -1) {
-                cart[existingIndex].quantity += quantity;
-            } else {
-                cart.push({
-                    id: product.id,
-                    title: product.title,
-                    price: product.price,
-                    image: product.images[0],
-                    size: size,
-                    quantity: quantity
-                });
-            }
-
-            saveCart();
-            updateCartUI();
-            showToast(`تم إضافة ${product.title.substring(0, 20)}... إلى السلة!`);
-            toggleCartDrawer(true);
-        }
-
-        function updateCartQuantity(index, delta) {
-            cart[index].quantity += delta;
-            if (cart[index].quantity <= 0) {
-                cart.splice(index, 1);
-            }
-            saveCart();
-            updateCartUI();
-        }
-
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            saveCart();
-            updateCartUI();
-        }
-
-        function saveCart() {
-            localStorage.setItem('elgant_rose_cart', JSON.stringify(cart));
-        }
-
-        function updateCartUI() {
-            const cartItemsContainer = document.getElementById('cartItemsContainer');
-            const cartBadge = document.getElementById('cartBadge');
-            const cartSubtotal = document.getElementById('cartSubtotal');
-
-            const totalItemsCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-            cartBadge.innerText = totalItemsCount;
-
-            if (cart.length === 0) {
-                cartItemsContainer.innerHTML = `
-                    <div class="text-center py-12 text-text-dark/50">
-                        <i class="fa-solid fa-basket-shopping text-4xl mb-2 text-primary-rose/40"></i>
-                        <p class="text-sm font-medium">حقيبة التسوق فارغة حالياً</p>
-                    </div>
-                `;
-                cartSubtotal.innerText = '0.00 د.أ';
-                return;
-            }
-
-            let html = '';
-            let total = 0;
-
-            cart.forEach((item, index) => {
-                const itemTotal = item.price * item.quantity;
-                total += itemTotal;
-
-                html += `
-                    <div class="flex gap-3 bg-bg-rose-light p-3 rounded-xl border border-border-color items-center">
-                        <img src="${item.image}" onerror="this.src='https://placehold.co/100x120/fbf7f6/c48b9f?text=Rose'" alt="thumb" class="w-16 h-20 object-cover rounded-lg border border-border-color">
-                        <div class="flex-1 min-w-0">
-                            <h4 class="text-xs font-bold text-text-dark truncate">${item.title}</h4>
-                            <div class="text-[11px] text-text-dark/60 mt-0.5">المقاس: <span class="font-bold text-primary-dark">${item.size}</span></div>
-                            <div class="text-xs font-bold text-primary-dark mt-1">${item.price.toFixed(2)} د.أ</div>
-                            
-                            <!-- Qty buttons in drawer -->
-                            <div class="flex items-center gap-2 mt-2">
-                                <div class="flex items-center border border-border-color rounded-md bg-white">
-                                    <button onclick="updateCartQuantity(${index}, -1)" class="px-2 py-0.5 text-xs font-bold">-</button>
-                                    <span class="px-2 text-xs font-bold">${item.quantity}</span>
-                                    <button onclick="updateCartQuantity(${index}, 1)" class="px-2 py-0.5 text-xs font-bold">+</button>
-                                </div>
-                                <button onclick="removeFromCart(${index})" class="text-red-500 text-xs hover:underline mr-auto">حذف</button>
-                            </div>
-                        </div>
-                    </div>
-                `;
-            });
-
-            cartItemsContainer.innerHTML = html;
-            cartSubtotal.innerText = `${total.toFixed(2)} د.أ`;
-        }
-
-        function toggleCartDrawer(open) {
-            const drawer = document.getElementById('cartDrawer');
-            const backdrop = document.getElementById('cartBackdrop');
-            const content = document.getElementById('cartContent');
-
-            if (open) {
-                drawer.classList.remove('hidden');
-                setTimeout(() => {
-                    backdrop.classList.remove('opacity-0');
-                    content.classList.remove('-translate-x-full');
-                }, 10);
-            } else {
-                backdrop.classList.add('opacity-0');
-                content.classList.add('-translate-x-full');
-                setTimeout(() => {
-                    drawer.classList.add('hidden');
-                }, 300);
-            }
-        }
-
-        // --- 9. WHATSAPP CHECKOUT DIRECT LINK ---
-        function checkoutWhatsApp() {
-            if (cart.length === 0) {
-                showToast('حقيبة التسوق فارغة!');
-                return;
-            }
-
-            let message = "مرحباً *ELGANT ROSE | الوردة الأنيقة* 🌹\nأود إتمام الطلب التالي:\n\n";
-            let total = 0;
-
-            cart.forEach((item, i) => {
-                const sub = item.price * item.quantity;
-                total += sub;
-                message += `${i + 1}. *${item.title}*\n   • المقاس: ${item.size}\n   • الكمية: ${item.quantity}\n   • السعر: ${sub.toFixed(2)} د.أ\n\n`;
-            });
-
-            message += `-------------------------\n`;
-            message += `*المجموع الإجمالي:* ${total.toFixed(2)} دينار أردني\n`;
-            message += `\nيرجى تزويدي بتأكيد الطلب وتفاصيل التوصيل! ✨`;
-
-            const encodedMsg = encodeURIComponent(message);
-            // Replace with store WhatsApp phone number
-            const whatsappUrl = `https://wa.me/?text=${encodedMsg}`;
-            window.open(whatsappUrl, '_blank');
-        }
-
-        // --- 10. WISHLIST TOGGLE ---
-        function toggleWishlist(productId) {
-            const index = wishlist.indexOf(productId);
-            if (index > -1) {
-                wishlist.splice(index, 1);
-                showToast('تم إزالة المنتج من المفضلة');
-            } else {
-                wishlist.push(productId);
-                showToast('تم إضافة المنتج إلى المفضلة ❤️');
-            }
-            localStorage.setItem('elgant_rose_wishlist', JSON.stringify(wishlist));
-            updateWishlistUI();
-            renderProducts();
-        }
-
-        function updateWishlistUI() {
-            const badge = document.getElementById('wishlistBadge');
-            badge.innerText = wishlist.length;
-            if (wishlist.length > 0) {
-                badge.classList.remove('hidden');
-            } else {
-                badge.classList.add('hidden');
-            }
-        }
-
-        function toggleWishlistFilter() {
-            onlyWishlistFilter = !onlyWishlistFilter;
-            const btn = document.getElementById('wishlistHeaderBtn');
-            if (onlyWishlistFilter) {
-                btn.classList.add('text-red-500');
-            } else {
-                btn.classList.remove('text-red-500');
-            }
-            renderProducts();
-        }
-
-        // --- 11. CATEGORY & SEARCH FILTERS ---
-        function filterCategory(cat) {
-            onlyWishlistFilter = false;
-            document.getElementById('wishlistHeaderBtn').classList.remove('text-red-500');
-            currentCategory = cat;
-
-            // Update Active Nav Buttons
-            const navBtns = document.querySelectorAll('.cat-btn');
-            navBtns.forEach(btn => {
-                btn.classList.remove('active', 'text-primary-dark', 'border-b-2', 'border-primary-dark', 'font-semibold');
-                btn.classList.add('text-text-dark/70');
-            });
-
-            event.target.classList.add('active', 'text-primary-dark', 'border-b-2', 'border-primary-dark', 'font-semibold');
-            event.target.classList.remove('text-text-dark/70');
-
-            renderProducts();
-        }
-
-        function filterProducts() {
-            renderProducts();
-        }
-        function filterProductsMobile() {
-            renderProducts();
-        }
-
-        // --- 12. ADMIN PANEL MODAL & LOGIC ---
-        function openAdminModal() {
-            document.getElementById('adminModal').classList.remove('hidden');
-            if (isAdminLoggedIn) {
-                showAdminDashboard();
-            } else {
-                document.getElementById('adminLoginForm').classList.remove('hidden');
-                document.getElementById('adminDashboard').classList.add('hidden');
-            }
-        }
-
-        function closeAdminModal() {
-            document.getElementById('adminModal').classList.add('hidden');
-        }
-
-        function handleAdminLogin() {
-            const u = document.getElementById('adminUser').value.trim();
-            const p = document.getElementById('adminPass').value.trim();
-
-            if (u === 'admin1' && p === '1986') {
-                isAdminLoggedIn = true;
-                document.getElementById('loginError').classList.add('hidden');
-                showAdminDashboard();
-                showToast('تم تسجيل الدخول بنجاح بنجاح كمسؤول');
-            } else {
-                document.getElementById('loginError').classList.remove('hidden');
-            }
-        }
-
-        function handleAdminLogout() {
-            isAdminLoggedIn = false;
-            document.getElementById('adminLoginForm').classList.remove('hidden');
-            document.getElementById('adminDashboard').classList.add('hidden');
-            showToast('تم تسجيل الخروج');
-        }
-
-        function showAdminDashboard() {
-            document.getElementById('adminLoginForm').classList.add('hidden');
-            document.getElementById('adminDashboard').classList.remove('hidden');
-            renderAdminProductList();
-        }
-
-        function handleAddProduct(e) {
-            e.preventDefault();
-
-            const title = document.getElementById('newTitle').value.trim();
-            const price = parseFloat(document.getElementById('newPrice').value);
-            const discount = document.getElementById('newDiscount').value.trim();
-            const category = document.getElementById('newCategory').value;
-
-            // Collect 5 images and transform Google Drive URLs
-            const rawImgs = [
-                document.getElementById('img1').value,
-                document.getElementById('img2').value,
-                document.getElementById('img3').value,
-                document.getElementById('img4').value,
-                document.getElementById('img5').value
-            ];
-
-            const processedImgs = rawImgs
-                .map(url => transformDriveUrl(url))
-                .filter(url => url.length > 0);
-
-            const newProd = {
-                id: 'prod_' + Date.now(),
-                title: title,
-                price: price,
-                originalPrice: discount,
-                category: category,
-                badge: discount ? 'تخفيض' : 'جديد',
-                rating: 5,
-                reviewsCount: 1,
-                images: processedImgs
-            };
-
-            products.unshift(newProd);
-            localStorage.setItem('elgant_rose_products', JSON.stringify(products));
-
-            // Reset form
-            document.getElementById('addProductForm').reset();
-            renderProducts();
-            renderAdminProductList();
-            showToast('تم نشر المنتج الجديد بنجاح!');
-        }
-
-        function deleteProduct(productId) {
-            products = products.filter(p => p.id !== productId);
-            localStorage.setItem('elgant_rose_products', JSON.stringify(products));
-            renderProducts();
-            renderAdminProductList();
-            showToast('تم حذف المنتج');
-        }
-
-        function renderAdminProductList() {
-            const listContainer = document.getElementById('adminProductList');
-            document.getElementById('adminProductCount').innerText = products.length;
-
-            if (products.length === 0) {
-                listContainer.innerHTML = '<p class="text-xs text-text-dark/50">لا توجد منتجات حالياً.</p>';
-                return;
-            }
-
-            let html = '';
-            products.forEach(p => {
-                html += `
-                    <div class="flex justify-between items-center bg-white p-2.5 rounded-lg border border-border-color text-xs">
-                        <div class="flex items-center gap-2 truncate">
-                            <img src="${p.images[0]}" onerror="this.src='https://placehold.co/50x50/fbf7f6/c48b9f?text=Rose'" class="w-8 h-8 rounded object-cover">
-                            <span class="font-bold truncate max-w-[200px]">${p.title}</span>
-                            <span class="text-primary-dark font-bold">${p.price.toFixed(2)} د.أ</span>
-                        </div>
-                        <button onclick="deleteProduct('${p.id}')" class="text-red-600 hover:text-red-800 p-1 font-bold">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
-                    </div>
-                `;
-            });
-            listContainer.innerHTML = html;
-        }
-
-        function resetToDefaultData() {
-            localStorage.removeItem('elgant_rose_products');
-            products = SAMPLE_PRODUCTS;
-            localStorage.setItem('elgant_rose_products', JSON.stringify(products));
-            renderProducts();
-            renderAdminProductList();
-            showToast('تمت إعادة ضبط البيانات الافتراضية');
-        }
-
-        // --- 13. COUNTDOWN TIMER ---
-        function startCountdown() {
-            let hours = 5, minutes = 12, seconds = 43;
-            const timerEl = document.getElementById('countdown');
-
-            setInterval(() => {
-                seconds--;
-                if (seconds < 0) {
-                    seconds = 59;
-                    minutes--;
-                    if (minutes < 0) {
-                        minutes = 59;
-                        hours--;
-                        if (hours < 0) hours = 24;
-                    }
-                }
-                const hStr = hours < 10 ? '0' + hours : hours;
-                const mStr = minutes < 10 ? '0' + minutes : minutes;
-                const sStr = seconds < 10 ? '0' + seconds : seconds;
-                timerEl.innerText = `${hStr}:${mStr}:${sStr}`;
-            }, 1000);
-        }
-
-        // --- 14. TOAST NOTIFICATION HELPERS ---
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toastMsg').innerText = msg;
-            toast.classList.remove('translate-y-20', 'opacity-0');
-            setTimeout(() => {
-                toast.classList.add('translate-y-20', 'opacity-0');
-            }, 3000);
-        }
-    </script>
-</body>
-</html>
+        .hero h2 {
+            font-family: 'Aref Ruqaa', serif;
+            font-size: 38px;
+            color: var(--primary-dark);
+            margin
