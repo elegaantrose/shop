@@ -7,7 +7,7 @@ app.use(express.json({ limit: '10mb' })); // لدعم رفع الصور الكب
 app.use(cors());
 
 // رابط الاتصال بقاعدة بيانات MongoDB الخاصة بك
-const MONGO_URI = "mongodb+srv://<db_username>:<db_password>@cluster0.liykb46.mongodb.net/elgantrose?retryWrites=true&w=majority";
+const MONGO_URI = "mongodb+srv://<db_username>:H123456789@cluster0.liykb46.mongodb.net/elgantrose?retryWrites=true&w=majority";
 
 mongoose.connect(MONGO_URI)
   .then(() => console.log('تم الاتصال بنجاح بـ MongoDB Atlas'))
